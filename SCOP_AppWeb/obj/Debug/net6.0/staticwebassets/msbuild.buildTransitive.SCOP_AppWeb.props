@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\SCOP_AppWeb.props" />
+</Project>

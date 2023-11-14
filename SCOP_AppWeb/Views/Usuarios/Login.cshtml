@@ -1,0 +1,45 @@
+﻿@model SCOP_AppWeb.Models.Usuarios
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="Titulos">
+    Autenticacion
+</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 Aliniamiento">
+            <form asp-action="Login" class="Fondos Textos" method="post" style="color: black; font-size:large; width:600px">
+                @if (TempData["Mensaje"] != null)
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                        <strong>@TempData["Mensaje"]</strong>
+                    </div>
+                }
+
+                @*entrada de datos para email*@
+                <div class="form-group">
+                    <label asp-for="correoUsuario" class="control-label fas fa-envelope">Correo</label>
+                    <input asp-for="correoUsuario" class="form-control" />
+                    <span asp-validation-for="correoUsuario" class="text-danger"></span>
+                </div>
+
+                @*entrada de datos de contraseña*@
+                <div class="form-group mt-3">
+                    <label asp-for="password" class="control-label fas fa-key">Password</label>
+                    <input asp-for="password" class="form-control " />
+                    <span asp-validation-for="password" class="text-danger"></span>                   
+                </div>
+
+                @*Post de los formularios*@
+                <div class="form-group mt-4">
+                    <input type="submit" value="  Aceptar" class="btn Botones fas fa-check-square-o" />
+                </div>
+            </form>
+
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
