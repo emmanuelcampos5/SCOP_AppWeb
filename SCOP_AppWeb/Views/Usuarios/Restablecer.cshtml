@@ -1,0 +1,51 @@
+﻿@model SCOP_AppWeb.Models.SeguridadRestablecer
+
+@{
+    ViewData["Title"] = "Restablecer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="Titulos">Restablecer</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 Fondos Textos">
+            @*Contenedor para mensajes de error*@
+            @if (TempData["MensajeError"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <button type="button" class="btn-close fas fa-exclamation-triangle" data-bs-dismiss="  Alerta" aria-label="close"></button>
+                    <strong>@TempData["MensajeError"]</strong>
+                </div>
+            }
+
+            @*Formulario para restablecer contraseña*@
+            <form asp-action="Restablecer" method="post" class="Fondos Textos" id="FormularioRestablecer">
+                <div class="form-group">
+                    <label asp-for="password" class="form-label fas fa-key">Contraseña Actual</label>
+                    <input asp-for="password" class="form-control" />
+                    <span asp-validation-for="password"></span>
+                </div>
+
+                @*solicitar la nueva contraseña*@
+                <div class="form-group mt-3">
+                    <label asp-for="nuevoPassword" class="form-label fas fa-unlock-alt">Nueva Contraseña</label>
+                    <input asp-for="nuevoPassword" class="form-control" />
+                    <span asp-validation-for="nuevoPassword"></span>
+                </div>
+
+                @*confirmar contraseña*@
+                <div class="form-group mt-3">
+                    <label asp-for="confirmar" class="form-label">Confirmar Contraseña</label>
+                    <input asp-for="confirmar" class="form-control" />
+                    <span asp-validation-for="confirmar"></span>
+                </div>
+                <div class="form-group mt-4">
+                    <input type="submit" value="   Aceptar" class="btn Botones fas fa-check-square-o" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

@@ -13,5 +13,6 @@ namespace SCOP_AppWeb.Models
         public DbSet<Requisiciones> Requisiciones { get; set; }
         public DbSet<Devoluciones> Devoluciones { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Roles> Roles { get; set; }
     }
 }
