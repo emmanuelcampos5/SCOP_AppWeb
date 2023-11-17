@@ -1,0 +1,53 @@
+﻿@model SCOP_AppWeb.Models.OrdenProduccion
+
+@{
+    ViewData["Title"] = "RegistrarOrdenProduccion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>RegistrarOrdenProduccion</h1>
+
+<h4>OrdenProduccion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegistrarOrdenProduccion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>         
+            
+            <div class="form-group">
+                <label asp-for="FechaRecepcion" class="control-label"></label>
+                <input asp-for="FechaRecepcion" class="form-control" />
+                <span asp-validation-for="FechaRecepcion" class="text-danger"></span>
+            </div>            
+
+            <div class="form-group">
+                <label asp-for="EstadoProduccion" class="control-label">Estado Produción</label>
+                <select asp-for="EstadoProduccion" class="combobox form-control">
+                    <option value="Espera">Espera</option>
+                    <option value="Producción">Producción</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CantidadProductos" class="control-label"></label>
+                <input asp-for="CantidadProductos" class="form-control" />
+                <span asp-validation-for="CantidadProductos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

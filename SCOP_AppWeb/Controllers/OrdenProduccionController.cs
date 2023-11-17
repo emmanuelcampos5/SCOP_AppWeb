@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SCOP_AppWeb.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace SCOP_AppWeb.Controllers
 {
     public class OrdenProduccionController : Controller
     {
+        
         private readonly AppDbContext _context;
 
         public OrdenProduccionController(AppDbContext appDbContext)
@@ -46,5 +49,43 @@ namespace SCOP_AppWeb.Controllers
 
             return costoTotal;
         }
+
+
+        public Usuarios ObtenerUsuarioConectado()
+        {
+            Usuarios user = _context.Usuarios.FirstOrDefault(u => u.correoUsuario == User.FindFirst(ClaimTypes.Name).Value);
+
+            return user;
+        }
+
+
+        [HttpGet]
+        public IActionResult RegistrarOrdenProduccion()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RegistrarOrdenProduccion(OrdenProduccion orden)
+        {
+            if(orden != null)
+            {
+
+                orden.IdUsuario = ObtenerUsuarioConectado().idUsuario;
+                orden.EstadoActivo = true;
+
+                
+                _context.Add(orden);
+
+                _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(orden);
+            }
+        }
+        
     }
 }

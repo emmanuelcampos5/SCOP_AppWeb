@@ -10907,19 +10907,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emman\\.nuget\\packages\\": {}
+    "C:\\Users\\mjohe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Archivos\\UCR\\Analisis\\Evaluaciones\\Proyecto Practico\\proyecto programado\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+      "projectUniqueName": "C:\\Users\\mjohe\\OneDrive - Universidad de Costa Rica\\Escritorio\\Proyecto Análisis\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
       "projectName": "SCOP_AppWeb",
-      "projectPath": "F:\\Archivos\\UCR\\Analisis\\Evaluaciones\\Proyecto Practico\\proyecto programado\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
-      "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-      "outputPath": "F:\\Archivos\\UCR\\Analisis\\Evaluaciones\\Proyecto Practico\\proyecto programado\\SCOP_AppWeb\\SCOP_AppWeb\\obj\\",
+      "projectPath": "C:\\Users\\mjohe\\OneDrive - Universidad de Costa Rica\\Escritorio\\Proyecto Análisis\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+      "packagesPath": "C:\\Users\\mjohe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mjohe\\OneDrive - Universidad de Costa Rica\\Escritorio\\Proyecto Análisis\\SCOP_AppWeb\\SCOP_AppWeb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mjohe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10973,7 +10973,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

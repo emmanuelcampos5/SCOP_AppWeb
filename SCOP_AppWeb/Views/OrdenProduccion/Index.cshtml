@@ -8,11 +8,17 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="RegistrarOrdenProduccion">Create New</a>
 </p>
 <table class="table">
     <thead>
-        <tr>                       
+        <tr>     
+            <th>
+                @Html.DisplayNameFor(model => model.IdOrdenProduccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaRecepcion)
             </th>
