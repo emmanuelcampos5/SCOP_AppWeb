@@ -11,6 +11,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4 Fondos Textos">
+            
             @*Contenedor para mensajes de error*@
             @if (TempData["MensajeError"] != null)
             {
@@ -20,8 +21,23 @@
                 </div>
             }
 
-            @*Formulario para restablecer contraseña*@
             <form asp-action="Restablecer" method="post" class="Fondos Textos" id="FormularioRestablecer">
+                
+                @*solicitar nombre completo*@
+                <div class="form-group">
+                    <label asp-for="nombreUsuario" class="form-label fas fa-key">Nombre Completo</label>
+                    <input asp-for="nombreUsuario" class="form-control" />
+                    <span asp-validation-for="nombreUsuario"></span>
+                </div>
+                
+                @*solicitar telefono*@
+                <div class="form-group">
+                    <label asp-for="telefonoUsuario" class="form-label fas fa-key">Telefono</label>
+                    <input asp-for="telefonoUsuario" class="form-control" />
+                    <span asp-validation-for="telefonoUsuario"></span>
+                </div>
+                
+                @*solicitar contraseña actual*@
                 <div class="form-group">
                     <label asp-for="password" class="form-label fas fa-key">Contraseña Actual</label>
                     <input asp-for="password" class="form-control" />

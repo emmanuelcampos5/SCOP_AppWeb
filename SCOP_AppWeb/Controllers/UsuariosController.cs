@@ -15,7 +15,7 @@ namespace SCOP_AppWeb.Controllers
         public UsuariosController(AppDbContext appDbContext)
         {
             _context = appDbContext;
-        }
+        }     
 
         //------------------------------------------LOGIN---------------------------------------------------
         [HttpGet]
@@ -64,7 +64,7 @@ namespace SCOP_AppWeb.Controllers
 
         }
 
-        //valida si el usuario se encuentra registrado en la base de datos
+        //
         private Usuarios validarUsuario(Usuarios temp)
         {
             Usuarios autorizado = null;
@@ -81,6 +81,13 @@ namespace SCOP_AppWeb.Controllers
                 }
             }
             return autorizado;
+        }
+
+        //-------------------------------------------INDEX----------------------------------------------------
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View(_context.Usuarios.ToList());
         }
 
         //---------------------------------------CREAR USUARIO------------------------------------------------
@@ -201,6 +208,8 @@ namespace SCOP_AppWeb.Controllers
                 {
                     if (pRestablecer.nuevoPassword.Equals(pRestablecer.confirmar))
                     {
+                        usuario.nombreUsuario = pRestablecer.nombreUsuario;
+                        usuario.telefonoUsuario = pRestablecer.telefonoUsuario;
                         usuario.password = pRestablecer.confirmar;
                         usuario.restablecer = true;
 

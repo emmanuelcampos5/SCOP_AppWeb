@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SCOP_AppWeb.Models.Usuarios>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="RegistrarUsuario">Registrar Usuario</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idRol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.correoUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.telefonoUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estadoActivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.restablecer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.idRol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.correoUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.telefonoUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estadoActivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restablecer)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

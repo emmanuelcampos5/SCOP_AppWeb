@@ -6,6 +6,10 @@ namespace SCOP_AppWeb.Models
     {
         public string correoUsuario { get; set; }
 
+        public string nombreUsuario { get; set; }
+
+        public string telefonoUsuario { get; set; }
+
         [Required(ErrorMessage = "Digite la contraseña enviada por email")]
         [DataType(DataType.Password)]
         public string password { get; set; }

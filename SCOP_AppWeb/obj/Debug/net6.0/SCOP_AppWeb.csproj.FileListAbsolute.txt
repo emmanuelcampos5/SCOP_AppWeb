@@ -519,3 +519,4 @@ C:\Users\mjohe\OneDrive - Universidad de Costa Rica\Escritorio\Proyecto Análisi
 C:\Users\mjohe\OneDrive - Universidad de Costa Rica\Escritorio\Proyecto Análisis\SCOP_AppWeb\SCOP_AppWeb\obj\Debug\net6.0\SCOP_AppWeb.pdb
 C:\Users\mjohe\OneDrive - Universidad de Costa Rica\Escritorio\Proyecto Análisis\SCOP_AppWeb\SCOP_AppWeb\obj\Debug\net6.0\SCOP_AppWeb.genruntimeconfig.cache
 C:\Users\mjohe\OneDrive - Universidad de Costa Rica\Escritorio\Proyecto Análisis\SCOP_AppWeb\SCOP_AppWeb\obj\Debug\net6.0\ref\SCOP_AppWeb.dll
+F:\Archivos\UCR\Analisis\Evaluaciones\Proyecto Practico\proyecto programado\SCOP_AppWeb\SCOP_AppWeb\obj\Debug\net6.0\SCOP_AppWeb.sourcelink.json

@@ -1,18 +1,96 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.Tamano {
+    width: 450px;
+}
+
+.Aliniamiento {
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    margin: 0 auto;
+}
+
+.Aliniamiento2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.Fondos {
+    background: rgba(255, 255, 255, 30%);
+    position: relative;
+    padding: 1em;
+    border-color: rgba(229, 229, 229, 25%);
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgba(14, 19, 8, 25%);
+    backdrop-filter: blur(10px);
+}
+
+.FondoInicio {
+    min-height: 100vh;
+    background: url("Img/Img2.png") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.barra {
+    background-color: rgb(58, 90, 64);
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    font-size: larger;
+    height: 78px;
+}
+
+.Textos {
+    font-family: 'Times New Roman';
+    font-weight: 400;
+}
+
+.Titulos {
+    font-family: 'Times New Roman';
+    font-weight: 600;
+    color: aliceblue;
+    text-shadow: 5px 2px 5px rgba(14, 19, 8, 25);
+}
+
+.Subtitulo {
+    font-family: 'Times New Roman';
+    font-weight: 600;
+    color: rgb(252, 163, 17);
+    text-shadow: 5px 2px 5px rgba(14, 19, 8, 25);
+}
+
+.Botones {
+    background-color: rgb(221, 161, 94);
+    color: white;
+    cursor: pointer;
+    transition: .5s;
+    border-radius: 10px;
+    font-family: 'Times New Roman';
+    font-weight: 600;
+    color: white;
+    font-family: 'Times New Roman';
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: rgb(188, 108, 37);
+    color: rgba(153, 88, 42);
+    border-radius: 10px;
 }
