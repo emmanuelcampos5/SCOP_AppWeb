@@ -10907,19 +10907,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emman\\.nuget\\packages\\": {}
+    "C:\\Users\\ejgp_\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Archivos\\UCR\\Analisis\\Evaluaciones\\Proyecto Practico\\proyecto programado\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+      "projectUniqueName": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
       "projectName": "SCOP_AppWeb",
-      "projectPath": "F:\\Archivos\\UCR\\Analisis\\Evaluaciones\\Proyecto Practico\\proyecto programado\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
-      "packagesPath": "C:\\Users\\emman\\.nuget\\packages\\",
-      "outputPath": "F:\\Archivos\\UCR\\Analisis\\Evaluaciones\\Proyecto Practico\\proyecto programado\\SCOP_AppWeb\\SCOP_AppWeb\\obj\\",
+      "projectPath": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+      "packagesPath": "C:\\Users\\ejgp_\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\emman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ejgp_\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10965,6 +10965,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.25, 6.0.25]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.25, 6.0.25]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.25, 6.0.25]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.25, 6.0.25]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
