@@ -1,14 +1,17 @@
 ﻿@model IEnumerable<SCOP_AppWeb.Models.Requisiciones>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Índice";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de requisiciones</h1>
+
+
+
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
 </p>
 <table class="table">
     <thead>
@@ -35,32 +38,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoRequisicion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostoRequisicion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoActivo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdRequisicion">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdRequisicion">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdRequisicion">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUsuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCreacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoRequisicion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CostoRequisicion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstadoActivo)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

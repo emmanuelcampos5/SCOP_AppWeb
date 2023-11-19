@@ -26,23 +26,6 @@ namespace SCOP_AppWeb.Controllers
                           Problem("Entity set 'AppDbContext.Requisiciones'  is null.");
         }
 
-        // GET: Requisiciones/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Requisiciones == null)
-            {
-                return NotFound();
-            }
-
-            var requisiciones = await _context.Requisiciones
-                .FirstOrDefaultAsync(m => m.IdRequisicion == id);
-            if (requisiciones == null)
-            {
-                return NotFound();
-            }
-
-            return View(requisiciones);
-        }
 
         // GET: Requisiciones/Create
         public IActionResult Create()
@@ -55,16 +38,22 @@ namespace SCOP_AppWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdRequisicion,IdOrdenProduccion,IdUsuario,FechaCreacion,TipoRequisicion,CostoRequisicion,EstadoActivo")] Requisiciones requisiciones)
+        public async Task<IActionResult> Create([Bind("IdOrdenProduccion,IdUsuario,TipoRequisicion,CostoRequisicion")] Requisiciones requisiciones)
         {
             if (ModelState.IsValid)
             {
+                // Asignar la fecha de creación automáticamente
+                requisiciones.FechaCreacion = DateTime.Now;
+                requisiciones.EstadoActivo = true;
+
                 _context.Add(requisiciones);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(requisiciones);
         }
+
 
         // GET: Requisiciones/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -111,7 +100,7 @@ namespace SCOP_AppWeb.Controllers
                     else
                     {
                         // La orden de producción no está en estado "Espera", no se permite la modificación
-                        ModelState.AddModelError(string.Empty, "No se puede modificar la requisición porque la orden de producción no está en estado 'Espera'.");
+                        TempData["Mensaje"] = "No se puede modificar la requisición porque la orden de producción no está en estado 'Espera'.";
                         return View(requisiciones);
                     }
                 }
@@ -130,6 +119,7 @@ namespace SCOP_AppWeb.Controllers
             }
             return View(requisiciones);
         }
+
 
         // GET: Requisiciones/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -167,15 +157,16 @@ namespace SCOP_AppWeb.Controllers
             // Verificar si la orden de producción está en estado "Espera"
             if (ordenProduccion != null && ordenProduccion.EstadoProduccion == "Espera")
             {
-                // Si la orden de producción está en estado "Espera", cambiar el estado de la requisición a "Inactivo"
+                // Si la orden de producción está en estado "Espera", cambiar el estado de la requisición a "Inactivo",o "false"
                 requisiciones.EstadoActivo = false; // 
                 _context.Update(requisiciones);
                 await _context.SaveChangesAsync();
             }
             else
             {
-                // La orden de producción no está en estado "Espera", no se permite la eliminación
-                ModelState.AddModelError(string.Empty, "No se puede eliminar la requisición porque la orden de producción no está en estado 'Espera'.");
+                // La orden de producción no está en estado "Espera", no se permite la cancelación                
+                TempData["Mensaje"] = "No se puede cancelar la requisición porque la orden de producción no está en estado 'Espera'.";
+
                 return View(requisiciones);
             }
 

@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Añadir nueva requisición</h1>
 
-<h4>Requisiciones</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,11 +23,6 @@
                 <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaCreacion" class="control-label"></label>
-                <input asp-for="FechaCreacion" class="form-control" />
-                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="TipoRequisicion" class="control-label"></label>
                 <input asp-for="TipoRequisicion" class="form-control" />
                 <span asp-validation-for="TipoRequisicion" class="text-danger"></span>
@@ -38,19 +32,14 @@
                 <input asp-for="CostoRequisicion" class="form-control" />
                 <span asp-validation-for="CostoRequisicion" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EstadoActivo" /> @Html.DisplayNameFor(model => model.EstadoActivo)
-                </label>
+            <div class="form-group mt-2">
+                <input type="submit" value="Añadir" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 

@@ -1,15 +1,15 @@
 ﻿@model SCOP_AppWeb.Models.Requisiciones
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Cancelar requisición";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Cancelar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Estás seguro que deseas cancelar la requisición?</h3>
 <div>
-    <h4>Requisiciones</h4>
+
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -49,10 +49,20 @@
             @Html.DisplayFor(model => model.EstadoActivo)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdRequisicion" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Cancelar la requisición" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
     </form>
+
+    <div>
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["Mensaje"]
+            </div>
+        }
+    </div>
+
 </div>
