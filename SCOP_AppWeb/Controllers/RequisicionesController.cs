@@ -20,11 +20,24 @@ namespace SCOP_AppWeb.Controllers
         }
 
         // GET: Requisiciones
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool mostrarInactivos = false)
         {
-              return _context.Requisiciones != null ? 
-                          View(await _context.Requisiciones.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.Requisiciones'  is null.");
+            IEnumerable<Requisiciones> requisiciones = _context.Requisiciones;
+
+            if (!mostrarInactivos)
+            {
+                requisiciones = requisiciones.Where(r => r.EstadoActivo);
+            }
+
+            ViewBag.MostrarInactivos = mostrarInactivos;
+
+            return View(requisiciones);
+        }
+
+        //Permite mkstrar las requisiciones que están canceladas o inactivas.
+        public IActionResult BuscarInactivos(bool mostrarInactivos)
+        {
+            return RedirectToAction("Index", new { mostrarInactivos });
         }
 
         //GET: Requisiciones/Buscar
@@ -82,7 +95,7 @@ namespace SCOP_AppWeb.Controllers
 
                             ViewBag.CostoTotal = await CalcularCostoRequisicionesPorOrdenProduccion(ordenProduccionId);
 
-                            // Agrega información adicional a ViewBag para ser utilizada en la vista
+                            // Se agrega la información del usuario y la descripción de la orden para la vista
                             ViewBag.NombreUsuarioOrdenProduccion = usuario.nombreUsuario;
                             ViewBag.DescripcionOrdenProduccion = ordenProduccion.Descripcion;
                         }
@@ -101,8 +114,8 @@ namespace SCOP_AppWeb.Controllers
             catch (Exception ex)
             {
                 mensajeError = "Ocurrió un error durante la búsqueda.";
-                // Loguear el error para diagnóstico.
-                // log.LogError(ex, "Error durante la búsqueda.");
+                // Loguear el error.
+                // 
             }
 
             if (!resultados.Any())
@@ -133,7 +146,7 @@ namespace SCOP_AppWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Asignar la fecha de creación automáticamente
+                // Asignar la fecha de creación y el estado automáticamente 
                 requisiciones.FechaCreacion = DateTime.Now;
                 requisiciones.EstadoActivo = true;
 
@@ -142,7 +155,7 @@ namespace SCOP_AppWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Si el modelo no es válido, volver a cargar la lista de usuarios y órdenes de producción
+            // Si pasa algo, volver a cargar la lista de usuarios y órdenes de producción
             ViewBag.Usuarios = _context.Usuarios.ToList();
             ViewBag.OrdenesProduccion = _context.OrdenProduccion.ToList();
 
@@ -189,7 +202,7 @@ namespace SCOP_AppWeb.Controllers
                     // Verificar si la orden de producción está en estado "Espera"
                     if (ordenProduccion != null && ordenProduccion.EstadoProduccion == "Espera")
                     {
-                        //hay un bug que hace que se cambie a false cuando se edita
+                        //Hay un bug que hace que se cambie a false cuando se edita
                         requisiciones.EstadoActivo = true;
                         // La orden de producción está en estado "Espera", se puede modificar la requisición
                         _context.Update(requisiciones);
@@ -255,7 +268,7 @@ namespace SCOP_AppWeb.Controllers
             // Verificar si la orden de producción está en estado "Espera"
             if (ordenProduccion != null && ordenProduccion.EstadoProduccion == "Espera")
             {
-                // Si la orden de producción está en estado "Espera", cambiar el estado de la requisición a "Inactivo",o "false"
+                // Si la orden de producción está en estado "Espera", cambiar el estado de la requisición a "false"
                 requisiciones.EstadoActivo = false; // 
                 _context.Update(requisiciones);
                 await _context.SaveChangesAsync();

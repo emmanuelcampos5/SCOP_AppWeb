@@ -7,12 +7,22 @@
 
 <h1>Lista de requisiciones</h1>
 
-
-
-
 <p>
-    <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
-    <a asp-action="Buscar" class="btn btn-primary">Buscar Requisiciones</a>
+    <div class="d-inline-block mb-2">
+        <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
+        <a asp-action="Buscar" class="btn btn-primary">
+            Buscar Requisiciones
+        </a>
+    </div>
+    @if (ViewBag.MostrarInactivos)
+    {
+        <a asp-action="BuscarInactivos" asp-route-mostrarInactivos="false" class="btn btn-secondary ml-2">Ocultar Inactivos</a>
+    }
+    else
+    {
+        <a asp-action="BuscarInactivos" asp-route-mostrarInactivos="true" class="btn btn-secondary ml-2">Mostrar Inactivos</a>
+    }
+
 </p>
 <table class="table">
     <thead>
