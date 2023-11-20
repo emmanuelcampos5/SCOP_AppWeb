@@ -38,6 +38,7 @@ namespace SCOP_AppWeb.Controllers
             IEnumerable<Requisiciones> resultados = new List<Requisiciones>();
             string mensajeError = null;
             OrdenProduccion ordenProduccion = null;
+            Usuarios usuario = null;
 
             try
             {
@@ -61,8 +62,13 @@ namespace SCOP_AppWeb.Controllers
                     case "OrdenProduccion":
                         if (int.TryParse(terminoBusqueda, out int ordenProduccionId))
                         {
-                            ordenProduccion = await _context.OrdenProduccion.FindAsync(ordenProduccionId);
-                            resultados = _context.Requisiciones.Where(r => r.IdOrdenProduccion == ordenProduccionId);
+                            ordenProduccion = await _context.OrdenProduccion
+                                .FirstOrDefaultAsync(op => op.IdOrdenProduccion == ordenProduccionId);
+                            usuario = await _context.Usuarios
+                                .FirstOrDefaultAsync(u => u.idUsuario == ordenProduccion.IdUsuario);
+
+                            resultados = _context.Requisiciones
+                                .Where(r => r.IdOrdenProduccion == ordenProduccionId);
 
                             if (!resultados.Any())
                             {
@@ -73,16 +79,19 @@ namespace SCOP_AppWeb.Controllers
                             {
                                 mensajeError = "No se encuentra una orden de producción con el ID " + terminoBusqueda + " en la base de datos.";
                             }
-                           
-
 
                             ViewBag.CostoTotal = await CalcularCostoRequisicionesPorOrdenProduccion(ordenProduccionId);
+
+                            // Agrega información adicional a ViewBag para ser utilizada en la vista
+                            ViewBag.NombreUsuarioOrdenProduccion = usuario.nombreUsuario;
+                            ViewBag.DescripcionOrdenProduccion = ordenProduccion.Descripcion;
                         }
                         else
                         {
                             mensajeError = "Ingrese un ID de Orden de Producción válido.";
                         }
                         break;
+
 
                     default:
                         mensajeError = "Seleccione un criterio de búsqueda válido.";
@@ -112,12 +121,12 @@ namespace SCOP_AppWeb.Controllers
         // GET: Requisiciones/Create
         public IActionResult Create()
         {
+            ViewBag.Usuarios = _context.Usuarios.ToList();
+            ViewBag.OrdenesProduccion = _context.OrdenProduccion.ToList();
             return View();
         }
 
-        // POST: Requisiciones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //POST: Requisiciones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdOrdenProduccion,IdUsuario,TipoRequisicion,CostoRequisicion")] Requisiciones requisiciones)
@@ -133,8 +142,13 @@ namespace SCOP_AppWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Si el modelo no es válido, volver a cargar la lista de usuarios y órdenes de producción
+            ViewBag.Usuarios = _context.Usuarios.ToList();
+            ViewBag.OrdenesProduccion = _context.OrdenProduccion.ToList();
+
             return View(requisiciones);
         }
+
 
 
         // GET: Requisiciones/Edit/5

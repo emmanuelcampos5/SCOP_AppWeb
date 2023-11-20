@@ -9,87 +9,87 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SCOP_AppWeb
 build_property.RootNamespace = SCOP_AppWeb
-build_property.ProjectDir = C:\Users\ejgp_\Source\Repos\SCOP_AppWeb\SCOP_AppWeb\
+build_property.ProjectDir = C:\Users\ejgp_\source\repos\SCOP_AppWeb\SCOP_AppWeb\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\ejgp_\Source\Repos\SCOP_AppWeb\SCOP_AppWeb
+build_property.MSBuildProjectDirectory = C:\Users\ejgp_\source\repos\SCOP_AppWeb\SCOP_AppWeb
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Devoluciones/Index.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Devoluciones/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2b2x1Y2lvbmVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Home/Index.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Home/Privacy.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/OrdenProduccion/Index.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/OrdenProduccion/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5Qcm9kdWNjaW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/OrdenProduccion/RegistrarOrdenProduccion.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/OrdenProduccion/RegistrarOrdenProduccion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5Qcm9kdWNjaW9uXFJlZ2lzdHJhck9yZGVuUHJvZHVjY2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Buscar.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Buscar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xCdXNjYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Create.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Delete.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Edit.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Index.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Shared/Error.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/Index.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/Login.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/RegistrarUsuario.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/RegistrarUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcUmVnaXN0cmFyVXN1YXJpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/Restablecer.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Usuarios/Restablecer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcUmVzdGFibGVjZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/_ViewImports.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/_ViewStart.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Shared/_Layout.cshtml]
+[C:/Users/ejgp_/source/repos/SCOP_AppWeb/SCOP_AppWeb/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-1qzpy563mz
