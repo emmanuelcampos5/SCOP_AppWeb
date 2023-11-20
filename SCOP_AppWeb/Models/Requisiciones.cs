@@ -15,6 +15,7 @@ namespace SCOP_AppWeb.Models
         public int IdUsuario { get; set; }
 
         [Display(Name = "Fecha de Creación")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = false)]
         public DateTime FechaCreacion { get; set; }
 
         [Display(Name = "Tipo de Requisición")]

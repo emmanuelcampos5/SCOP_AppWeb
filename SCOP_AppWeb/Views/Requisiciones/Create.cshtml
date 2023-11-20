@@ -22,11 +22,17 @@
                 <input asp-for="IdUsuario" class="form-control" />
                 <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="TipoRequisicion" class="control-label"></label>
-                <input asp-for="TipoRequisicion" class="form-control" />
+                <select asp-for="TipoRequisicion" class="form-control">
+                    <option value="ManoDeObra">Mano de obra</option>
+                    <option value="MateriaPrima">Materia prima</option>
+                    <option value="CostosIndirectos">Costos indirectos</option>
+                </select>
                 <span asp-validation-for="TipoRequisicion" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CostoRequisicion" class="control-label"></label>
                 <input asp-for="CostoRequisicion" class="form-control" />

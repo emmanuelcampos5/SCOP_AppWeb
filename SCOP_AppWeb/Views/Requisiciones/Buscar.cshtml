@@ -1,0 +1,117 @@
+﻿@model IEnumerable<SCOP_AppWeb.Models.Requisiciones>
+@{
+    ViewData["Title"] = "Buscar Requisiciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Buscar Requisiciones</h1>
+
+<form method="post" asp-action="BuscarFiltrado" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="terminoBusqueda">Buscar:</label>
+        <input type="text" name="terminoBusqueda" class="form-control" />
+    </div>
+
+    <div class="form-group mr-2">
+        <label for="buscarPor">Buscar por:</label>
+        <select name="buscarPor" class="form-control">
+            <option value="Requisicion">Número de Requisición</option>
+            <option value="OrdenProduccion">ID de Orden de Producción</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Buscar</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <h2>Resultados de la Búsqueda:</h2>
+
+    @if (ViewBag.CostoTotal != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID de Orden de Producción</th>
+                    <th>Total de Costos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.First().IdOrdenProduccion</td>
+                    <td>@ViewBag.CostoTotal</td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdOrdenProduccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdUsuario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaCreacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoRequisicion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CostoRequisicion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EstadoActivo)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdUsuario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaCreacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoRequisicion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CostoRequisicion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstadoActivo)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["Mensaje"]
+    </div>
+}
+
+<div class="form-group mt-2">
+    <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
+</div>

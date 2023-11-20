@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZW5Qcm9kdWNjaW9uXFJlZ2lzdHJhck9yZGVuUHJvZHVjY2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Buscar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xCdXNjYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/ejgp_/Source/Repos/SCOP_AppWeb/SCOP_AppWeb/Views/Requisiciones/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWlzaWNpb25lc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
