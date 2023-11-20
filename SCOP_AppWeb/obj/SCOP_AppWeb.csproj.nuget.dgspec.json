@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ejgp_\\Source\\Repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj": {}
+    "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ejgp_\\Source\\Repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj": {
+    "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ejgp_\\Source\\Repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+        "projectUniqueName": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
         "projectName": "SCOP_AppWeb",
-        "projectPath": "C:\\Users\\ejgp_\\Source\\Repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+        "projectPath": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
         "packagesPath": "C:\\Users\\ejgp_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ejgp_\\Source\\Repos\\SCOP_AppWeb\\SCOP_AppWeb\\obj\\",
+        "outputPath": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ejgp_\\AppData\\Roaming\\NuGet\\NuGet.Config",
