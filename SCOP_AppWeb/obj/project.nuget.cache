@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "m4uRMiPzPUm2SRstj0L/Zz5pB1uv8IweL8+d22OPB5wmb5NpNwU8UbS8ApyBqVnVq1mx6LhzCfpWzjEN3BuMOw==",
+  "dgSpecHash": "f84cYwMJ5Kr7D9lYwb5jeWMNSoEXsfefZDCSHEa/nvOnCQkwK1dZs4r6fofpJQGudC2KAJvlfjUmkvKZRsl0Dw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ejgp_\\source\\repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
+  "projectFilePath": "C:\\Users\\ejgp_\\Source\\Repos\\SCOP_AppWeb\\SCOP_AppWeb\\SCOP_AppWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ejgp_\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\ejgp_\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

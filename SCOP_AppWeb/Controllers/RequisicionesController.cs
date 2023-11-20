@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SCOP_AppWeb.Models;
 
 namespace SCOP_AppWeb.Controllers
@@ -25,6 +26,87 @@ namespace SCOP_AppWeb.Controllers
                           View(await _context.Requisiciones.ToListAsync()) :
                           Problem("Entity set 'AppDbContext.Requisiciones'  is null.");
         }
+
+        //GET: Requisiciones/Buscar
+        public IActionResult Buscar()
+        {
+            return View("Buscar");
+        }
+        [HttpPost]
+        public async Task<IActionResult> BuscarFiltradoAsync(string terminoBusqueda, string buscarPor)
+        {
+            IEnumerable<Requisiciones> resultados = new List<Requisiciones>();
+            string mensajeError = null;
+            OrdenProduccion ordenProduccion = null;
+
+            try
+            {
+                switch (buscarPor)
+                {
+                    case "Requisicion":
+                        if (int.TryParse(terminoBusqueda, out int requisicionId))
+                        {
+                            resultados = _context.Requisiciones.Where(r => r.IdRequisicion == requisicionId);
+                        }
+                        if (!resultados.Any())
+                        {
+                            mensajeError = "No se encuentra una requisión con el ID " + terminoBusqueda + " en la base de datos.";
+                        }
+                        if(terminoBusqueda.IsNullOrEmpty())
+                        {
+                            mensajeError = "Ingrese un número de requisición válido.";
+                        }
+                        break;
+
+                    case "OrdenProduccion":
+                        if (int.TryParse(terminoBusqueda, out int ordenProduccionId))
+                        {
+                            ordenProduccion = await _context.OrdenProduccion.FindAsync(ordenProduccionId);
+                            resultados = _context.Requisiciones.Where(r => r.IdOrdenProduccion == ordenProduccionId);
+
+                            if (!resultados.Any())
+                            {
+                                mensajeError = "No se encuentra requisiciones asociadas con el ID " + terminoBusqueda + " en la base de datos.";
+                            }
+
+                            if (ordenProduccion == null)
+                            {
+                                mensajeError = "No se encuentra una orden de producción con el ID " + terminoBusqueda + " en la base de datos.";
+                            }
+                           
+
+
+                            ViewBag.CostoTotal = await CalcularCostoRequisicionesPorOrdenProduccion(ordenProduccionId);
+                        }
+                        else
+                        {
+                            mensajeError = "Ingrese un ID de Orden de Producción válido.";
+                        }
+                        break;
+
+                    default:
+                        mensajeError = "Seleccione un criterio de búsqueda válido.";
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                mensajeError = "Ocurrió un error durante la búsqueda.";
+                // Loguear el error para diagnóstico.
+                // log.LogError(ex, "Error durante la búsqueda.");
+            }
+
+            if (!resultados.Any())
+            {
+                TempData["Mensaje"] = mensajeError;
+                return RedirectToAction(nameof(Buscar));
+            }
+
+            return View("Buscar", resultados);
+        }
+
+
+
 
 
         // GET: Requisiciones/Create
@@ -76,7 +158,7 @@ namespace SCOP_AppWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdRequisicion,IdOrdenProduccion,IdUsuario,FechaCreacion,TipoRequisicion,CostoRequisicion,EstadoActivo")] Requisiciones requisiciones)
+        public async Task<IActionResult> Edit(int id, [Bind("IdRequisicion,IdOrdenProduccion,IdUsuario,FechaCreacion,TipoRequisicion,CostoRequisicion")] Requisiciones requisiciones)
         {
             if (id != requisiciones.IdRequisicion)
             {
@@ -93,6 +175,8 @@ namespace SCOP_AppWeb.Controllers
                     // Verificar si la orden de producción está en estado "Espera"
                     if (ordenProduccion != null && ordenProduccion.EstadoProduccion == "Espera")
                     {
+                        //hay un bug que hace que se cambie a false cuando se edita
+                        requisiciones.EstadoActivo = true;
                         // La orden de producción está en estado "Espera", se puede modificar la requisición
                         _context.Update(requisiciones);
                         await _context.SaveChangesAsync();
@@ -179,5 +263,24 @@ namespace SCOP_AppWeb.Controllers
         {
           return (_context.Requisiciones?.Any(e => e.IdRequisicion == id)).GetValueOrDefault();
         }
+
+
+
+
+
+
+        public async Task<float> CalcularCostoRequisicionesPorOrdenProduccion(int idOrdenProduccion)
+        {
+            // Buscar todas las requisiciones asociadas al ID de orden de producción
+            var requisiciones = await _context.Requisiciones
+                .Where(r => r.IdOrdenProduccion == idOrdenProduccion)
+                .ToListAsync();
+
+            // Sumar los costos de las requisiciones encontradas
+            float costoTotal = (float)requisiciones.Sum(r => r.CostoRequisicion);
+
+            return costoTotal;
+        }
+
     }
 }
