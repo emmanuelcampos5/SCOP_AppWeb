@@ -7,7 +7,7 @@ namespace SCOP_AppWeb.Controllers
 {
     public class OrdenProduccionController : Controller
     {
-        
+
         private readonly AppDbContext _context;
 
         public OrdenProduccionController(AppDbContext appDbContext)
@@ -16,8 +16,16 @@ namespace SCOP_AppWeb.Controllers
         }
 
         public IActionResult Index()
-        {           
-            return View(_context.OrdenProduccion.ToList());
+        {
+            //return View(_context.OrdenProduccion.ToList());
+            return View(ObtenerOrdenesProduccionActivas());
+        }
+
+        public List<OrdenProduccion> ObtenerOrdenesProduccionActivas()
+        {
+            return _context.OrdenProduccion
+                .Where(d => d.EstadoActivo == true)
+                .ToList();
         }
 
 
@@ -67,15 +75,15 @@ namespace SCOP_AppWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult RegistrarOrdenProduccion(OrdenProduccion orden)
+        public IActionResult RegistrarOrdenProduccion([Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
         {
-            if(orden != null)
+            if (orden != null)
             {
 
                 orden.IdUsuario = ObtenerUsuarioConectado().idUsuario;
                 orden.EstadoActivo = true;
 
-                
+
                 _context.Add(orden);
 
                 _context.SaveChangesAsync();
@@ -86,6 +94,65 @@ namespace SCOP_AppWeb.Controllers
                 return View(orden);
             }
         }
+<<<<<<< Updated upstream
         
+=======
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            var temp = _context.OrdenProduccion.Find(id);
+
+            if (temp == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(temp);
+            }
+
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+
+            var temp = _context.OrdenProduccion.Find(id);
+
+            try
+            {
+                if (temp.EstadoProduccion == "Espera")
+                {   
+                    temp.EstadoActivo = false;
+                    _context.OrdenProduccion.Update(temp);
+                    _context.SaveChanges();
+
+                    RegistroAuditoria auditoria = new RegistroAuditoria();
+
+                    auditoria.TablaModificada = "OrdenProduccion";
+                    auditoria.FechaModificacion = DateTime.Now;
+                    auditoria.IdUsuarioModificacion = ObtenerUsuarioConectado().idUsuario;
+                    auditoria.Descripcion = "Se eliminó la orden de producción con el ID " + temp.IdOrdenProduccion;
+
+                    _context.RegistroAuditoria.Add(auditoria);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    TempData["MensajeError"] = "No se pueden eliminar oredenes en estado de producción o finalizado";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = "Error al eliminar la orden";
+            }
+                   
+            return RedirectToAction("Index");
+
+        }   
+>>>>>>> Stashed changes
     }
 }
