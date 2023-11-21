@@ -8,57 +8,39 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="RegistrarDevoluciones">Create New</a>
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdDevolucion)
-            </th>
+        <tr>           
             <th>
                 @Html.DisplayNameFor(model => model.IdOrdenProduccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
+            </th>           
             <th>
                 @Html.DisplayNameFor(model => model.FechaCreacion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImporteDevolucion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoActivo)
-            </th>
+            </th>           
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDevolucion)
-            </td>
+        <tr>            
             <td>
                 @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
+            </td>            
             <td>
                 @Html.DisplayFor(modelItem => item.FechaCreacion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ImporteDevolucion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoActivo)
-            </td>
+            </td>           
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Cancelar", "CancelarDevolucion", new {  id=item.IdDevolucion })
             </td>
         </tr>
 }
