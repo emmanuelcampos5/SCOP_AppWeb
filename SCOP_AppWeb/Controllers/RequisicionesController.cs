@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Pipelines;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,24 +22,21 @@ namespace SCOP_AppWeb.Controllers
         }
 
         // GET: Requisiciones
-        public async Task<IActionResult> Index(bool mostrarInactivos = false)
+        public async Task<IActionResult> Index(bool mostrarActivos = true)
         {
             IEnumerable<Requisiciones> requisiciones = _context.Requisiciones;
-
-            if (!mostrarInactivos)
-            {
-                requisiciones = requisiciones.Where(r => r.EstadoActivo);
-            }
-
-            ViewBag.MostrarInactivos = mostrarInactivos;
+            //Inicializa la tabla para mostrar las requisiciones
+            requisiciones = requisiciones.Where(r => r.EstadoActivo == mostrarActivos);          
+            //Si es true se muestran las requisiciones activas, si es false las que han sido canceladas
+            ViewBag.MostrarActivos = mostrarActivos;
 
             return View(requisiciones);
         }
 
-        //Permite mkstrar las requisiciones que están canceladas o inactivas.
-        public IActionResult BuscarInactivos(bool mostrarInactivos)
+        //Permite mostrar las requisiciones que están activas o las que han sido canceladas.
+        public IActionResult FiltrarRequisiciones(bool mostrarActivos)
         {
-            return RedirectToAction("Index", new { mostrarInactivos });
+            return RedirectToAction("Index", new { mostrarActivos });
         }
 
         //GET: Requisiciones/Buscar
@@ -46,14 +44,18 @@ namespace SCOP_AppWeb.Controllers
         {
             return View("Buscar");
         }
+
+        //Realiza la búsqueda de las requisiciones u órdenes de producción según su ID
         [HttpPost]
         public async Task<IActionResult> BuscarFiltradoAsync(string terminoBusqueda, string buscarPor)
         {
+            //Inicializa las variables
             IEnumerable<Requisiciones> resultados = new List<Requisiciones>();
             string mensajeError = null;
             OrdenProduccion ordenProduccion = null;
             Usuarios usuario = null;
 
+            //Selecciona si la búsqueda es por órdenes de producción o requisiciones
             try
             {
                 switch (buscarPor)
@@ -78,11 +80,16 @@ namespace SCOP_AppWeb.Controllers
                         {
                             ordenProduccion = await _context.OrdenProduccion
                                 .FirstOrDefaultAsync(op => op.IdOrdenProduccion == ordenProduccionId);
-                            usuario = await _context.Usuarios
-                                .FirstOrDefaultAsync(u => u.idUsuario == ordenProduccion.IdUsuario);
 
-                            resultados = _context.Requisiciones
-                                .Where(r => r.IdOrdenProduccion == ordenProduccionId);
+                            //Si la orden existe busca el usuario y las requisiciones asociadas
+                            if (ordenProduccion != null)
+                            {
+                                usuario = await _context.Usuarios
+                                    .FirstOrDefaultAsync(u => u.idUsuario == ordenProduccion.IdUsuario);
+
+                                resultados = _context.Requisiciones
+                                    .Where(r => r.IdOrdenProduccion == ordenProduccionId);
+                            }
 
                             if (!resultados.Any())
                             {
@@ -93,12 +100,15 @@ namespace SCOP_AppWeb.Controllers
                             {
                                 mensajeError = "No se encuentra una orden de producción con el ID " + terminoBusqueda + " en la base de datos.";
                             }
+                            else
+                            {
+                                //Se agrega la información de los costos parciales (sin impuestos) de la orden de producción
+                                ViewBag.CostoTotal = await CalcularCostoRequisicionesPorOrdenProduccion(ordenProduccionId);
 
-                            ViewBag.CostoTotal = await CalcularCostoRequisicionesPorOrdenProduccion(ordenProduccionId);
-
-                            // Se agrega la información del usuario y la descripción de la orden para la vista
-                            ViewBag.NombreUsuarioOrdenProduccion = usuario.nombreUsuario;
-                            ViewBag.DescripcionOrdenProduccion = ordenProduccion.Descripcion;
+                                // Se agrega la información del usuario y la descripción de la orden para la vista
+                                ViewBag.NombreUsuarioOrdenProduccion = usuario.nombreUsuario;
+                                ViewBag.DescripcionOrdenProduccion = ordenProduccion.Descripcion;
+                            }
                         }
                         else
                         {
@@ -115,8 +125,7 @@ namespace SCOP_AppWeb.Controllers
             catch (Exception ex)
             {
                 mensajeError = "Ocurrió un error durante la búsqueda.";
-                // Loguear el error.
-                // 
+                // Loguear el error.                
             }
 
             if (!resultados.Any())
@@ -135,16 +144,30 @@ namespace SCOP_AppWeb.Controllers
         // GET: Requisiciones/Create
         public IActionResult Create()
         {
-            ViewBag.Usuarios = _context.Usuarios.ToList();
-            ViewBag.OrdenesProduccion = _context.OrdenProduccion.ToList();
-            return View();
+            Requisiciones requisicion = new Requisiciones();
+
+            if (User.Identity.IsAuthenticated)
+            {
+                Usuarios usuarioConectado = ObtenerUsuarioConectado();
+                ViewBag.Usuarios = usuarioConectado.nombreUsuario;
+            }
+
+            return View(requisicion);
         }
+
 
         // POST: Requisiciones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdOrdenProduccion,IdUsuario,TipoRequisicion,CostoRequisicion")] Requisiciones requisiciones)
         {
+            OrdenProduccion ordenProduccion = _context.OrdenProduccion.FirstOrDefault(o => o.IdOrdenProduccion == requisiciones.IdOrdenProduccion);
+            if (ordenProduccion == null)
+            {
+                TempData["Mensaje"] = "No se encuentra una órden de producción con el ID " + requisiciones.IdOrdenProduccion;
+                return RedirectToAction(nameof(Create));
+            }
+
             if (ModelState.IsValid)
             {
                 Usuarios user = null;
@@ -218,6 +241,7 @@ namespace SCOP_AppWeb.Controllers
                 return NotFound();
             }
 
+
             if (ModelState.IsValid)
             {
                 try
@@ -230,9 +254,13 @@ namespace SCOP_AppWeb.Controllers
                     {
                         //Hay un bug que hace que se cambie a false cuando se edita
                         requisiciones.EstadoActivo = true;
+   
                         // La orden de producción está en estado "Espera", se puede modificar la requisición
                         _context.Update(requisiciones);
                         await _context.SaveChangesAsync();
+
+                        //Auditoria de edición
+                        await Auditoria(requisiciones, "editar");
                     }
                     else
                     {
@@ -301,7 +329,7 @@ namespace SCOP_AppWeb.Controllers
                     _context.Update(requisiciones);
                     await _context.SaveChangesAsync();
                     //Auditoria de eliminación
-                    await AuditoriaEliminacion(requisiciones);
+                    await Auditoria(requisiciones, "eliminar");
                 }
                 else
                 {
@@ -329,13 +357,17 @@ namespace SCOP_AppWeb.Controllers
 
 
 
+        public Usuarios ObtenerUsuarioConectado() {
+            Usuarios user = _context.Usuarios.FirstOrDefault(u => u.correoUsuario == User.FindFirst(ClaimTypes.Name).Value);
+            return user;
+        }
 
-
+        
         public async Task<float> CalcularCostoRequisicionesPorOrdenProduccion(int idOrdenProduccion)
         {
             // Buscar todas las requisiciones asociadas al ID de orden de producción
             var requisiciones = await _context.Requisiciones
-                .Where(r => r.IdOrdenProduccion == idOrdenProduccion)
+                .Where(r => r.IdOrdenProduccion == idOrdenProduccion && r.EstadoActivo == true)
                 .ToListAsync();
 
             // Sumar los costos de las requisiciones encontradas
@@ -344,7 +376,7 @@ namespace SCOP_AppWeb.Controllers
             return costoTotal;
         }
 
-        public async Task AuditoriaEliminacion(Requisiciones requisicion)
+        public async Task Auditoria(Requisiciones requisicion, string tipoAccion)
         {
             // Obtener el nombre del usuario logeado
             var correoUsuario = User.Identity.Name;
@@ -358,9 +390,22 @@ namespace SCOP_AppWeb.Controllers
                 {
                     TablaModificada = "Requisiciones",
                     IdUsuarioModificacion = user.idUsuario,
-                    Descripcion = "Se eliminó la requisición con el ID " + requisicion.IdRequisicion,
                     FechaModificacion = DateTime.Now
                 };
+
+                switch (tipoAccion)
+                {
+                    case "eliminar":
+                        registroAuditoria.Descripcion = "Se eliminó la requisición con el ID " + requisicion.IdRequisicion;
+                        break;
+
+                    case "editar":
+                        registroAuditoria.Descripcion = "Se editó la requisición con el ID " + requisicion.IdRequisicion;
+                        break;
+
+                    default:
+                        throw new ArgumentException("Acción no identificada para la auditoría.");
+                }
 
                 _context.RegistroAuditoria.Add(registroAuditoria);
                 await _context.SaveChangesAsync();
@@ -368,9 +413,10 @@ namespace SCOP_AppWeb.Controllers
             else
             {
                 // Si el usuario no se encuentra                
-                throw new InvalidOperationException("No se pudo encontrar el usuario para la auditoría de eliminación.");
+                throw new InvalidOperationException("No se pudo encontrar el usuario para la auditoría.");
             }
         }
+
 
 
     }

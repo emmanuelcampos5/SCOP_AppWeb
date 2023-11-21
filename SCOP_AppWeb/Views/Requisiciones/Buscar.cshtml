@@ -61,9 +61,6 @@
                         @Html.DisplayNameFor(model => model.IdOrdenProduccion)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.IdUsuario)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.FechaCreacion)
                     </th>
                     <th>
@@ -81,12 +78,11 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+                @if (item.EstadoActivo == true)
+                {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdUsuario)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FechaCreacion)
@@ -101,10 +97,39 @@
                             @Html.DisplayFor(modelItem => item.EstadoActivo)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div>
+                                    <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
+                                </div>
+                            }
                         </td>
                     </tr>
+                }
+                else
+                {
+                    <tr class="text-muted"> 
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaCreacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoRequisicion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CostoRequisicion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstadoActivo)
+                        </td>
+                        <td>
+                          
+                        </td>
+                    </tr>
+                }
                 }
             </tbody>
         </table>

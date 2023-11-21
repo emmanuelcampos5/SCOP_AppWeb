@@ -6,7 +6,12 @@
 }
 
 <h1>Añadir nueva requisición</h1>
-
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="alert alert-danger" role="alert">
+        <h3>Inicie sesión para añadir una requisición</h3>
+    </div>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,13 +19,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="IdOrdenProduccion" class="control-label"></label>
-                <select asp-for="IdOrdenProduccion" class="form-control">
-                    @foreach (var ordenProduccion in ViewBag.OrdenesProduccion)
-                    {
-                        <option value="@ordenProduccion.IdOrdenProduccion">@ordenProduccion.Descripcion</option>
-                    }
-                </select>
+                <label asp-for="IdOrdenProduccion" class="control-label">Número de Orden de Producción</label>
+                <input asp-for="IdOrdenProduccion" class="form-control" />
                 <span asp-validation-for="IdOrdenProduccion" class="text-danger"></span>
             </div>
 
@@ -29,22 +29,16 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <input class="form-control" value="@User.Identity.Name" readonly />                    
+                    <input class="form-control" value="@ViewBag.Usuarios" readonly />
                 }
                 else
-                {
-                    <select asp-for="IdUsuario" class="form-control">
-                        @foreach (var usuario in ViewBag.Usuarios)
-                        {
-                            <option value="@usuario.idUsuario">@usuario.nombreUsuario</option>
-                        }
-                    </select>
-                    <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                {                    
+                    <input class="form-control" value="       " readonly />
                 }
             </div>
 
             <div class="form-group">
-                <label asp-for="TipoRequisicion" class="control-label"></label>
+                <label asp-for="TipoRequisicion" class="control-label">Tipo de Requisición</label>
                 <select asp-for="TipoRequisicion" class="form-control">
                     <option value="ManoDeObra">Mano de obra</option>
                     <option value="MateriaPrima">Materia prima</option>
@@ -54,15 +48,30 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="CostoRequisicion" class="control-label"></label>
+                <label asp-for="CostoRequisicion" class="control-label">Costo de Requisición</label>
                 <input asp-for="CostoRequisicion" class="form-control" />
                 <span asp-validation-for="CostoRequisicion" class="text-danger"></span>
             </div>
 
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <h3>@TempData["Mensaje"]</h3>
+                </div>
+            }
+
             <div class="form-group mt-2">
-                <input type="submit" value="Añadir" class="btn btn-success" />
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="submit" value="Añadir" class="btn btn-success" />
+                }
+                else
+                {
+                    <input type="submit" value="Añadir" class="btn btn-success" disabled />
+                }
                 <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
             </div>
         </form>
     </div>
+    
 </div>

@@ -7,6 +7,14 @@
 
 <h1>Editar requisición</h1>
 
+    @if (!User.Identity.IsAuthenticated)
+    {
+    <div class="alert alert-danger" role="alert">
+        <h3>Inicie sesión para editar</h3>
+    </div>
+    }
+
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,15 +29,15 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                <input asp-for="IdUsuario" class="form-control" readonly="readonly" />
-                <span asp-validation-for="IdUsuario" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
                 <label asp-for="FechaCreacion" class="control-label"></label>
                 <input asp-for="FechaCreacion" class="form-control" readonly="readonly" />
                 <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group d-none">
+                <label asp-for="IdUsuario" class="control-label"></label>
+                <input asp-for="IdUsuario" class="form-control" readonly="readonly" />
+                <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -51,7 +59,14 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Guardar cambios" class="btn btn-success" />
+                 @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="submit" value="Guardar cambios" class="btn btn-success" />
+                }
+                else
+                {
+                    <input type="submit" value="Guardar cambios" class="btn btn-success disabled" />                    
+                }
                 <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
             </div>
 

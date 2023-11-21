@@ -14,13 +14,13 @@
             Buscar Requisiciones
         </a>
     </div>
-    @if (ViewBag.MostrarInactivos)
+    @if (ViewBag.MostrarActivos)
     {
-        <a asp-action="BuscarInactivos" asp-route-mostrarInactivos="false" class="btn btn-secondary ml-2">Ocultar Inactivos</a>
+        <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="false" class="btn btn-secondary ml-2">Mostrar canceladas</a>
     }
     else
     {
-        <a asp-action="BuscarInactivos" asp-route-mostrarInactivos="true" class="btn btn-secondary ml-2">Mostrar Inactivos</a>
+        <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="true" class="btn btn-secondary ml-2">Ocultar canceladas</a>
     }
 
 </p>
@@ -29,10 +29,7 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.IdOrdenProduccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
+            </th>          
             <th>
                 @Html.DisplayNameFor(model => model.FechaCreacion)
             </th>
@@ -51,30 +48,58 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdUsuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaCreacion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoRequisicion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CostoRequisicion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EstadoActivo)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
-                </td>
-            </tr>
+            @if (item.EstadoActivo == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoRequisicion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostoRequisicion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoActivo)
+                    </td>
+                    <td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
+                                <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr class="text-muted">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoRequisicion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CostoRequisicion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoActivo)
+                    </td>
+                    <td>
+                      
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

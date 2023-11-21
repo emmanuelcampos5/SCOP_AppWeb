@@ -7,8 +7,17 @@
 
 <h1>Cancelar</h1>
 
-<h3>¿Estás seguro que deseas cancelar la requisición?</h3>
-<div>
+ @if (User.Identity.IsAuthenticated)
+     {
+       <h3>¿Estás seguro que deseas cancelar la requisición?</h3>
+     }
+ else{
+    <div class="alert alert-danger" role="alert">
+        <h3>Inicie sesión para eliminar</h3>
+    </div>
+     }
+
+    <div>
 
     <hr />
     <dl class="row">
@@ -17,12 +26,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdOrdenProduccion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdUsuario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdUsuario)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FechaCreacion)
@@ -52,8 +55,15 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdRequisicion" />
-        <input type="submit" value="Cancelar la requisición" class="btn btn-danger" /> |
-        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+        @if (User.Identity.IsAuthenticated)
+                {
+                   <input type="submit" value="Cancelar la requisición" class="btn btn-danger" />        
+                }
+        else
+                {
+                   <input type="submit" value="Cancelar la requisición" class="btn btn-danger" disabled />
+                }
+        | <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
     </form>
 
     <div>
