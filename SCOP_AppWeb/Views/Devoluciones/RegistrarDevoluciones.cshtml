@@ -1,0 +1,42 @@
+﻿@model SCOP_AppWeb.Models.Devoluciones
+
+@{
+    ViewData["Title"] = "RegistrarDevoluciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Registrar Devoluciones</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                <strong>@TempData["Mensaje"]</strong>
+            </div>
+        }
+        <form asp-action="RegistrarDevoluciones">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdOrdenProduccion" class="control-label"></label>               
+                <input asp-for="IdOrdenProduccion" class="form-control" />
+                <span asp-validation-for="IdOrdenProduccion" class="text-danger"></span>
+            </div>                      
+            <div class="form-group">
+                <label asp-for="ImporteDevolucion" class="control-label"></label>
+                <input asp-for="ImporteDevolucion" class="form-control" />
+                <span asp-validation-for="ImporteDevolucion" class="text-danger"></span>
+            </div>           
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

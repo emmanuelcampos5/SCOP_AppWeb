@@ -35,7 +35,7 @@ namespace SCOP_AppWeb.Controllers
             return View(requisiciones);
         }
 
-        //Permite mkstrar las requisiciones que están canceladas o inactivas.
+        //Permite mostrar las requisiciones que están canceladas o inactivas.
         public IActionResult BuscarInactivos(bool mostrarInactivos)
         {
             return RedirectToAction("Index", new { mostrarInactivos });
