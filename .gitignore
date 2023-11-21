@@ -1,3 +1,7 @@
 .vs/
 SCOP_AppWeb/bin/
 SCOP_AppWeb/obj/
+*.cache
+*.v2
+*.bin
+.vs/SCOP_AppWeb/v17/.suo
