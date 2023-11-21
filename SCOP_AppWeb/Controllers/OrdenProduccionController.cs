@@ -2,6 +2,7 @@
 using SCOP_AppWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace SCOP_AppWeb.Controllers
 {
@@ -67,14 +68,14 @@ namespace SCOP_AppWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult RegistrarOrdenProduccion()
+        public async Task<IActionResult> RegistrarOrdenProduccion()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult RegistrarOrdenProduccion([Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
+        public async Task<IActionResult> RegistrarOrdenProduccion([Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
         {
             if (orden != null)
             {
@@ -85,7 +86,7 @@ namespace SCOP_AppWeb.Controllers
 
                 _context.Add(orden);
 
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -142,11 +143,68 @@ namespace SCOP_AppWeb.Controllers
             }
             catch (Exception ex)
             {
-                TempData["MensajeError"] = "Error al eliminar la orden";
+                TempData["MensajeError"] = "Error al eliminar la orden" + ex.Message;
             }
                    
             return RedirectToAction("Index");
 
-        }   
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var temp = await _context.OrdenProduccion.FindAsync(id);
+
+            if(temp == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(temp);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
+        {
+            if(id != orden.IdOrdenProduccion)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (orden.EstadoProduccion == "Espera")
+                    {
+                        _context.OrdenProduccion.Update(orden);
+                        await _context.SaveChangesAsync();
+
+                        RegistroAuditoria auditoria = new RegistroAuditoria();
+
+                        auditoria.TablaModificada = "OrdenProduccion";
+                        auditoria.FechaModificacion = DateTime.Now;
+                        auditoria.IdUsuarioModificacion = ObtenerUsuarioConectado().idUsuario;
+                        auditoria.Descripcion = "Se editó la orden de producción con el ID " + orden.IdOrdenProduccion;
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["MensajeError"] = "No se pueden eliminar oredenes en estado de producción o finalizado";
+                        return View(orden);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["MensajeError"] = "No se pueden eliminar oredenes en estado de producción o finalizado" + ex.Message;
+                }
+                return RedirectToAction(nameof(Index));
+            }            
+            return View(orden);                        
+        }
     }
 }

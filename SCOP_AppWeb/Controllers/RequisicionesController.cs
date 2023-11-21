@@ -226,7 +226,7 @@ namespace SCOP_AppWeb.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
             return View(requisiciones);
         }
