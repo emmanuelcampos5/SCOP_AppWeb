@@ -66,7 +66,6 @@ namespace SCOP_AppWeb.Controllers
             return user;
         }
 
-
         [HttpGet]
         public IActionResult RegistrarOrdenProduccion()
         {
@@ -95,7 +94,6 @@ namespace SCOP_AppWeb.Controllers
             }
         }
 
-
         [HttpGet]
         public IActionResult Delete(int? id)
         {
@@ -112,8 +110,7 @@ namespace SCOP_AppWeb.Controllers
 
         }
 
-
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
