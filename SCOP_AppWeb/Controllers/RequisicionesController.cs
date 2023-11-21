@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Pipelines;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -139,25 +140,50 @@ namespace SCOP_AppWeb.Controllers
             return View();
         }
 
-        //POST: Requisiciones/Create
+        // POST: Requisiciones/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdOrdenProduccion,IdUsuario,TipoRequisicion,CostoRequisicion")] Requisiciones requisiciones)
         {
             if (ModelState.IsValid)
             {
-                // Asignar la fecha de creación y el estado automáticamente 
-                requisiciones.FechaCreacion = DateTime.Now;
-                requisiciones.EstadoActivo = true;
+                Usuarios user = null;
 
-                _context.Add(requisiciones);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (User.Identity.IsAuthenticated)
+                {
+                    // Obtener el nombre del usuario logeado
+                    var correoUsuario = User.Identity.Name;
+                    // Buscar el ID del usuario en base al correo de usuario
+                    user = await _context.Usuarios.SingleOrDefaultAsync(u => u.correoUsuario == correoUsuario);
+                }
+                else {
+                    user = await _context.Usuarios.FirstOrDefaultAsync(u => u.idUsuario == requisiciones.IdUsuario);
+                }                   
+                
+
+                if (user != null)
+                {
+                    // Asignar la fecha de creación y el estado automáticamente
+                    requisiciones.FechaCreacion = DateTime.Now;
+                    requisiciones.EstadoActivo = true;
+
+                    // Asignar el ID del usuario logeado a la requisición
+                    requisiciones.IdUsuario = user.idUsuario;
+
+                    _context.Add(requisiciones);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // Manejar el caso donde el usuario no se encuentra en la base de datos
+                    ModelState.AddModelError(string.Empty, "El usuario no se encuentra en la base de datos.");
+                }
             }
 
-            // Si pasa algo, volver a cargar la lista de usuarios y órdenes de producción
-            ViewBag.Usuarios = _context.Usuarios.ToList();
+            // Si pasa algo, volver a cargar la lista de órdenes de producción y usuarios
             ViewBag.OrdenesProduccion = _context.OrdenProduccion.ToList();
+            ViewBag.Usuarios = _context.Usuarios.ToList();
 
             return View(requisiciones);
         }
@@ -265,20 +291,29 @@ namespace SCOP_AppWeb.Controllers
             // Obtener la orden de producción asociada a la requisición
             var ordenProduccion = await _context.OrdenProduccion.FindAsync(requisiciones.IdOrdenProduccion);
 
-            // Verificar si la orden de producción está en estado "Espera"
-            if (ordenProduccion != null && ordenProduccion.EstadoProduccion == "Espera")
+            if (User.Identity.IsAuthenticated)
             {
-                // Si la orden de producción está en estado "Espera", cambiar el estado de la requisición a "false"
-                requisiciones.EstadoActivo = false; // 
-                _context.Update(requisiciones);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                // La orden de producción no está en estado "Espera", no se permite la cancelación                
-                TempData["Mensaje"] = "No se puede cancelar la requisición porque la orden de producción no está en estado 'Espera'.";
+                // Verificar si la orden de producción está en estado "Espera"
+                if (ordenProduccion != null && ordenProduccion.EstadoProduccion == "Espera")
+                {
+                    // Si la orden de producción está en estado "Espera", cambiar el estado de la requisición a "false"
+                    requisiciones.EstadoActivo = false; // 
+                    _context.Update(requisiciones);
+                    await _context.SaveChangesAsync();
+                    //Auditoria de eliminación
+                    await AuditoriaEliminacion(requisiciones);
+                }
+                else
+                {
+                    // La orden de producción no está en estado "Espera", no se permite la cancelación                
+                    TempData["Mensaje"] = "No se puede cancelar la requisición porque la orden de producción no está en estado 'Espera'.";
 
-                return View(requisiciones);
+                    return View(requisiciones);
+                }
+            }
+            else {
+                TempData["Mensaje"] = "Inicie sesión para realizar esta acción";
+                return RedirectToAction(nameof(Delete));
             }
 
             return RedirectToAction(nameof(Index));
@@ -308,6 +343,35 @@ namespace SCOP_AppWeb.Controllers
 
             return costoTotal;
         }
+
+        public async Task AuditoriaEliminacion(Requisiciones requisicion)
+        {
+            // Obtener el nombre del usuario logeado
+            var correoUsuario = User.Identity.Name;
+
+            // Buscar el ID del usuario en base al nombre de usuario
+            var user = await _context.Usuarios.FirstOrDefaultAsync(u => u.correoUsuario == correoUsuario);
+
+            if (user != null)
+            {
+                RegistroAuditoria registroAuditoria = new RegistroAuditoria
+                {
+                    TablaModificada = "Requisiciones",
+                    IdUsuarioModificacion = user.idUsuario,
+                    Descripcion = "Se eliminó la requisición con el ID " + requisicion.IdRequisicion,
+                    FechaModificacion = DateTime.Now
+                };
+
+                _context.RegistroAuditoria.Add(registroAuditoria);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Si el usuario no se encuentra                
+                throw new InvalidOperationException("No se pudo encontrar el usuario para la auditoría de eliminación.");
+            }
+        }
+
 
     }
 }

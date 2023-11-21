@@ -16,27 +16,31 @@
             <div class="form-group">
                 <label asp-for="IdOrdenProduccion" class="control-label"></label>
                 <select asp-for="IdOrdenProduccion" class="form-control">
-                    @if (ViewBag.OrdenesProduccion != null)
+                    @foreach (var ordenProduccion in ViewBag.OrdenesProduccion)
                     {
-                        foreach (var ordenProduccion in ViewBag.OrdenesProduccion)
-                        {
-                            <option value="@ordenProduccion.IdOrdenProduccion">@ordenProduccion.Descripcion</option>
-                        }
+                        <option value="@ordenProduccion.IdOrdenProduccion">@ordenProduccion.Descripcion</option>
                     }
                 </select>
                 <span asp-validation-for="IdOrdenProduccion" class="text-danger"></span>
             </div>
 
-
             <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                <select asp-for="IdUsuario" class="form-control">
-                    @foreach (var usuario in ViewBag.Usuarios)
-                    {
-                        <option value="@usuario.idUsuario">@usuario.nombreUsuario</option>
-                    }
-                </select>
-                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                <label asp-for="IdUsuario" class="control-label">Usuario</label>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <input class="form-control" value="@User.Identity.Name" readonly />                    
+                }
+                else
+                {
+                    <select asp-for="IdUsuario" class="form-control">
+                        @foreach (var usuario in ViewBag.Usuarios)
+                        {
+                            <option value="@usuario.idUsuario">@usuario.nombreUsuario</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdUsuario" class="text-danger"></span>
+                }
             </div>
 
             <div class="form-group">
@@ -62,4 +66,3 @@
         </form>
     </div>
 </div>
-

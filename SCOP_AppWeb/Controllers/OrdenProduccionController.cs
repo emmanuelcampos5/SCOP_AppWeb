@@ -94,9 +94,7 @@ namespace SCOP_AppWeb.Controllers
                 return View(orden);
             }
         }
-<<<<<<< Updated upstream
-        
-=======
+
 
         [HttpGet]
         public IActionResult Delete(int? id)
@@ -153,6 +151,6 @@ namespace SCOP_AppWeb.Controllers
             return RedirectToAction("Index");
 
         }   
->>>>>>> Stashed changes
+
     }
 }
