@@ -62,10 +62,11 @@
                 @Html.DisplayFor(modelItem => item.EstadoActivo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.IdOrdenProduccion })
-            </td>
+
+                <a asp-action="Edit" asp-route-id="@item.IdOrdenProduccion" class="btn btn-success">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdOrdenProduccion" class="btn btn-danger">Cancelar</a> |
+                <a asp-action="Finalizar" asp-route-id="@item.IdOrdenProduccion" class="btn btn-danger">Finalizar</a>
+
         </tr>
 }
     </tbody>

@@ -2,6 +2,7 @@
 using SCOP_AppWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace SCOP_AppWeb.Controllers
 {
@@ -66,15 +67,25 @@ namespace SCOP_AppWeb.Controllers
             return user;
         }
 
+        public string ObtenerEstadoProduccionOrden(int id)
+        {
+            string estado;
+
+            var orden = _context.OrdenProduccion.AsNoTracking().FirstOrDefault(o => o.IdOrdenProduccion == id);
+            estado = orden.EstadoProduccion;
+
+            return estado;
+        }
+
         [HttpGet]
-        public IActionResult RegistrarOrdenProduccion()
+        public async Task<IActionResult> RegistrarOrdenProduccion()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult RegistrarOrdenProduccion([Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
+        public async Task<IActionResult> RegistrarOrdenProduccion([Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
         {
             if (orden != null)
             {
@@ -85,7 +96,7 @@ namespace SCOP_AppWeb.Controllers
 
                 _context.Add(orden);
 
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -142,12 +153,76 @@ namespace SCOP_AppWeb.Controllers
             }
             catch (Exception ex)
             {
-                TempData["MensajeError"] = "Error al eliminar la orden";
+                TempData["MensajeError"] = "Error al eliminar la orden" + ex.Message;
             }
                    
             return RedirectToAction("Index");
-
         }   
+        
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var temp = await _context.OrdenProduccion.FindAsync(id);
+
+            if(temp == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(temp);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
+        {
+            if(id != orden.IdOrdenProduccion)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //var temp = _context.OrdenProduccion.Find(id);
+                    //await _context.SaveChangesAsync();
+
+                    string estado = ObtenerEstadoProduccionOrden(id);
+
+                    if (estado == "Espera")
+                    {
+                        _context.OrdenProduccion.Update(orden);
+                        await _context.SaveChangesAsync();
+
+                        RegistroAuditoria auditoria = new RegistroAuditoria();
+
+                        auditoria.TablaModificada = "OrdenProduccion";
+                        auditoria.FechaModificacion = DateTime.Now;
+                        auditoria.IdUsuarioModificacion = ObtenerUsuarioConectado().idUsuario;
+                        auditoria.Descripcion = "Se editó la orden de producción con el ID " + orden.IdOrdenProduccion;
+
+                        _context.RegistroAuditoria.Update(auditoria);
+                        await _context.SaveChangesAsync();
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["MensajeError"] = "No se pueden editar oredenes en estado de producción o finalizado";
+                        return RedirectToAction("Index");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["MensajeError"] = "Error al editar la orden de produccion" + ex.Message;
+                }
+                return RedirectToAction(nameof(Index));
+            }            
+            return View(orden);                        
+        }
     }
 }
