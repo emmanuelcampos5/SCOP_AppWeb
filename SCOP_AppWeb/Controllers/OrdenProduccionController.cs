@@ -67,6 +67,18 @@ namespace SCOP_AppWeb.Controllers
             return user;
         }
 
+        public string ObtenerEstadoProduccionOrden(int id)
+        {
+            string estado;
+
+            OrdenProduccion orden = new OrdenProduccion();
+            orden =  _context.OrdenProduccion.Find(id);
+
+            estado = orden.EstadoProduccion;
+
+            return estado;
+        }
+
         [HttpGet]
         public async Task<IActionResult> RegistrarOrdenProduccion()
         {
@@ -178,7 +190,9 @@ namespace SCOP_AppWeb.Controllers
             {
                 try
                 {
-                    if (orden.EstadoProduccion == "Espera")
+                    //string estado = ObtenerEstadoProduccionOrden(id);
+
+                    if(orden.EstadoProduccion == "Espera")
                     {
                         _context.OrdenProduccion.Update(orden);
                         await _context.SaveChangesAsync();
@@ -190,17 +204,20 @@ namespace SCOP_AppWeb.Controllers
                         auditoria.IdUsuarioModificacion = ObtenerUsuarioConectado().idUsuario;
                         auditoria.Descripcion = "Se editó la orden de producción con el ID " + orden.IdOrdenProduccion;
 
+                        _context.RegistroAuditoria.Update(auditoria);
+                        await _context.SaveChangesAsync();
+
                         return RedirectToAction("Index");
                     }
                     else
                     {
-                        TempData["MensajeError"] = "No se pueden eliminar oredenes en estado de producción o finalizado";
+                        TempData["MensajeError"] = "No se pueden editar oredenes en estado de producción o finalizado";
                         return View(orden);
                     }
                 }
                 catch (Exception ex)
                 {
-                    TempData["MensajeError"] = "No se pueden eliminar oredenes en estado de producción o finalizado" + ex.Message;
+                    TempData["MensajeError"] = "Error al editar la orden de produccion" + ex.Message;
                 }
                 return RedirectToAction(nameof(Index));
             }            
