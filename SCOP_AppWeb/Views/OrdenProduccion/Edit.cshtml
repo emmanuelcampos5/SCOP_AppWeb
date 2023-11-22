@@ -26,7 +26,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="EstadoProduccion" class="control-label"></label>
-                <input asp-for="EstadoProduccion" class="form-control" />
+                <select asp-for="EstadoProduccion" class="combobox form-control">
+                    <option value="Espera">Espera</option>
+                    <option value="Producción">Producción</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
                 <span asp-validation-for="EstadoProduccion" class="text-danger"></span>
             </div>
             <div class="form-group">

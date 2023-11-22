@@ -71,9 +71,7 @@ namespace SCOP_AppWeb.Controllers
         {
             string estado;
 
-            OrdenProduccion orden = new OrdenProduccion();
-            orden =  _context.OrdenProduccion.Find(id);
-
+            var orden = _context.OrdenProduccion.AsNoTracking().FirstOrDefault(o => o.IdOrdenProduccion == id);
             estado = orden.EstadoProduccion;
 
             return estado;
@@ -190,9 +188,12 @@ namespace SCOP_AppWeb.Controllers
             {
                 try
                 {
-                    //string estado = ObtenerEstadoProduccionOrden(id);
+                    //var temp = _context.OrdenProduccion.Find(id);
+                    //await _context.SaveChangesAsync();
 
-                    if(orden.EstadoProduccion == "Espera")
+                    string estado = ObtenerEstadoProduccionOrden(id);
+
+                    if (estado == "Espera")
                     {
                         _context.OrdenProduccion.Update(orden);
                         await _context.SaveChangesAsync();
@@ -212,7 +213,7 @@ namespace SCOP_AppWeb.Controllers
                     else
                     {
                         TempData["MensajeError"] = "No se pueden editar oredenes en estado de producción o finalizado";
-                        return View(orden);
+                        return RedirectToAction("Index");
                     }
                 }
                 catch (Exception ex)
