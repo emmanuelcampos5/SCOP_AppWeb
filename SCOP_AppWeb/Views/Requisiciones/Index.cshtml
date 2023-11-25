@@ -9,10 +9,11 @@
 
 <p>
     <div class="d-inline-block mb-2">
-        <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
+        <a asp-action="Create" class="btn btn-success">Añadir requisición</a>
         <a asp-action="Buscar" class="btn btn-primary">
-            Buscar Requisiciones
+            Buscar requisiciones
         </a>
+
     </div>
     @if (ViewBag.MostrarActivos)
     {
@@ -23,13 +24,39 @@
         <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="true" class="btn btn-secondary ml-2">Ocultar canceladas</a>
     }
 
+     @if (ViewBag.MostrarActivos)
+    {
+        @if (ViewBag.OrdenarPor.Equals("Requisición"))
+        {
+            <form asp-action="Index" asp-controller="Devoluciones" method="get">
+                <input type="hidden" name="ordenarPorIdOrdenProduccion" value="true" />
+                <p>
+                    <button type="submit" class="btn btn-dark ">Ordenar por ID de Orden de Producción</button>
+                </p>
+            </form>
+        }
+        else
+        {
+            <form asp-action="Index" asp-controller="Devoluciones" method="get">
+                <input type="hidden" name="ordenarPorIdOrdenProduccion" value="false" />
+                <p>
+                    <button type="submit" class="btn btn-dark ">Ordenar por ID de Requisición</button>
+                </p>
+            </form>
+        }
+
+    }
+
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.IdOrdenProduccion)
-            </th>          
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRequisicion)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaCreacion)
             </th>
@@ -53,6 +80,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdRequisicion)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaCreacion)

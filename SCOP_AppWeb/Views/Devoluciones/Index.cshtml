@@ -1,48 +1,128 @@
 ﻿@model IEnumerable<SCOP_AppWeb.Models.Devoluciones>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Devoluciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Listado de devoluciones</h1>
+
 
 <p>
-    <a asp-action="RegistrarDevoluciones">Create New</a>
+    <div class="d-inline-block mb-2">
+        <a asp-action="Create" class="btn btn-success">Solicitar devolución</a>
+        <a asp-action="Buscar" class="btn btn-primary">
+            Buscar devoluciones
+        </a>      
+
+    </div>
+    @if (ViewBag.MostrarActivos)
+    {
+        <a asp-action="FiltrarDevoluciones" asp-route-mostrarActivos="false" class="btn btn-secondary ml-2">Mostrar canceladas</a>
+    }
+    else
+    {
+        <a asp-action="FiltrarDevoluciones" asp-route-mostrarActivos="true" class="btn btn-secondary ml-2">Ocultar canceladas</a>
+    }
+    
+     @if (ViewBag.MostrarActivos)
+    {
+        @if (ViewBag.OrdenarPor.Equals("Devolución"))
+        {
+            <form asp-action="Index" asp-controller="Devoluciones" method="get">
+                <input type="hidden" name="ordenarPorIdOrdenProduccion" value="true" />
+                <p>
+                    <button type="submit" class="btn btn-dark ">Ordenar por ID de Orden de Producción</button>
+                </p>
+            </form>
+        }
+        else
+        {
+            <form asp-action="Index" asp-controller="Devoluciones" method="get">
+                <input type="hidden" name="ordenarPorIdOrdenProduccion" value="false" />
+                <p>
+                    <button type="submit" class="btn btn-dark ">Ordenar por ID de Devolución</button>
+                </p>
+            </form>
+        }
+
+    }
+
 </p>
+
 <table class="table">
     <thead>
-        <tr>           
+        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.IdOrdenProduccion)
-            </th>           
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDevolucion)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaCreacion)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImporteDevolucion)
-            </th>           
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoActivo)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>            
-            <td>
-                @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImporteDevolucion)
-            </td>           
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Cancelar", "CancelarDevolucion", new {  id=item.IdDevolucion })
-            </td>
-        </tr>
-}
+            @if (item.EstadoActivo == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDevolucion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImporteDevolucion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoActivo)
+                    </td>
+                    <td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.IdDevolucion" class="btn btn-success">Editar</a> |                    
+                                <a asp-action="Delete" asp-route-id="@item.IdDevolucion" class="btn btn-danger">Cancelar</a>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr class="text-muted">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaCreacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImporteDevolucion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoActivo)
+                    </td>
+                    <td>
+                    
+                    </td>
+                </tr>
+                
+            }
+        }
     </tbody>
 </table>

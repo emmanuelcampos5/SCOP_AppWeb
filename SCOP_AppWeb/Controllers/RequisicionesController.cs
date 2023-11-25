@@ -20,15 +20,27 @@ namespace SCOP_AppWeb.Controllers
         {
             _context = context;
         }
-
-        // GET: Requisiciones
-        public async Task<IActionResult> Index(bool mostrarActivos = true)
+        // GET: Devoluciones        
+        public async Task<IActionResult> Index(bool mostrarActivos = true, bool ordenarPorIdOrdenProduccion = false)
         {
             IEnumerable<Requisiciones> requisiciones = _context.Requisiciones;
-            //Inicializa la tabla para mostrar las requisiciones
-            requisiciones = requisiciones.Where(r => r.EstadoActivo == mostrarActivos);          
-            //Si es true se muestran las requisiciones activas, si es false las que han sido canceladas
+
+            // Filtra por activos o cancelados
+            requisiciones = requisiciones.Where(r => r.EstadoActivo == mostrarActivos);
+
+            // Si es true se muestran las devoluciones activas, si es false las que han sido canceladas
             ViewBag.MostrarActivos = mostrarActivos;
+
+            // Ordena la lista solo si se hace clic en el botón para ordenar
+            if (ordenarPorIdOrdenProduccion)
+            {
+                requisiciones = requisiciones.OrderBy(d => d.IdOrdenProduccion);
+                ViewBag.OrdenarPor = "Producción";
+            }
+            else
+            {
+                ViewBag.OrdenarPor = "Requisición";
+            }
 
             return View(requisiciones);
         }

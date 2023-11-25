@@ -1,0 +1,135 @@
+﻿@model IEnumerable<SCOP_AppWeb.Models.Devoluciones>
+
+@{
+    ViewData["Title"] = "Buscar Devoluciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Buscar Devoluciones</h1>
+
+<form method="post" asp-action="BuscarFiltrado" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="terminoBusqueda">Buscar:</label>
+        <input type="text" name="terminoBusqueda" class="form-control" />
+    </div>
+
+    <div class="form-group mr-2">
+        <label for="buscarPor">Buscar por:</label>
+        <select name="buscarPor" class="form-control">
+            <option value="Devolucion">Número de Devolución</option>
+            <option value="OrdenProduccion">ID de Orden de Producción</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Buscar</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <h2>Resultados de la Búsqueda:</h2>
+
+    @if (ViewBag.CostoTotal != null)
+    {
+        <h3>Costo total de la orden de producción</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID de Orden de Producción</th>                    
+                    <th>Descripción de Orden de Producción</th>  
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.First().IdOrdenProduccion</td>                    
+                    <td>@ViewBag.DescripcionOrdenProduccion</td>                    
+                </tr>
+            </tbody>
+        </table>
+        <h3>Desglose de la orden de producción</h3>
+    }
+    <!-- table detalles-->
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdOrdenProduccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaCreacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImporteDevolucion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstadoActivo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.EstadoActivo == true)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaCreacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ImporteDevolucion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstadoActivo)
+                        </td>
+                        <td>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div>
+                                    <a asp-action="Edit" asp-route-id="@item.IdDevolucion" class="btn bt-success">Editar</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.IdDevolucion" class="btn btn-danger">Cancelar</a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="text-muted">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaCreacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ImporteDevolucion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstadoActivo)
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["Mensaje"]
+    </div>
+}
+
+
+<div class="form-group mt-2">
+    <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
+</div>
