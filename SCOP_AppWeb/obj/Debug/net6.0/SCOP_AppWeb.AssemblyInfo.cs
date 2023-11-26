@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SCOP_AppWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+35dd99886e96b59e51283aab84b7a111cdc8a4d6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a88b053d25fc51bf0ed528f9d59b7334a6157c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("SCOP_AppWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SCOP_AppWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

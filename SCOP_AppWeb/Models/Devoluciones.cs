@@ -6,6 +6,7 @@ namespace SCOP_AppWeb.Models
     public class Devoluciones
     {
         [Key]
+        [Display(Name = "ID de Devolución")]
         public int IdDevolucion { get; set; }
 
         [Display(Name = "ID de Orden de Producción")]        

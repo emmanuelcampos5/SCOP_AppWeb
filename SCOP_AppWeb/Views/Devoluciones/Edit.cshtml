@@ -1,13 +1,13 @@
 ﻿@model SCOP_AppWeb.Models.Devoluciones
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar devolución";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h4>Devoluciones</h4>
+<h4>Devolución:</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,18 +15,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdDevolucion" />
             <div class="form-group">
-                <label asp-for="IdOrdenProduccion" class="control-label"></label>
-                <input asp-for="IdOrdenProduccion" class="form-control" />
-                <span asp-validation-for="IdOrdenProduccion" class="text-danger"></span>
+                <label asp-for="IdDevolucion" class="control-label"></label>
+                <input asp-for="IdDevolucion" class="form-control" readonly />
+                <span asp-validation-for="IdDevolucion" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="IdOrdenProduccion" class="control-label"></label>
+                <input asp-for="IdOrdenProduccion" class="form-control" readonly/>
+                <span asp-validation-for="IdOrdenProduccion" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
                 <label asp-for="IdUsuario" class="control-label"></label>
                 <input asp-for="IdUsuario" class="form-control" />
                 <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaCreacion" class="control-label"></label>
-                <input asp-for="FechaCreacion" class="form-control" />
+                <input asp-for="FechaCreacion" class="form-control" readonly />
                 <span asp-validation-for="FechaCreacion" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,18 +40,18 @@
                 <span asp-validation-for="ImporteDevolucion" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EstadoActivo" /> @Html.DisplayNameFor(model => model.EstadoActivo)
+                <label class="form-check-label" disabled>
+                    <input class="form-check-input" disabled asp-for="EstadoActivo" /> @Html.DisplayNameFor(model => model.EstadoActivo)
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar cambios" class="btn btn-success mt-2" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary mt-2">Volver a la lista</a>
 </div>
 

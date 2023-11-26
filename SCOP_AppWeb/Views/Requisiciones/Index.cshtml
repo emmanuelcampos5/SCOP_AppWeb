@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SCOP_AppWeb.Models.Requisiciones>
 
 @{
-    ViewData["Title"] = "Índice";
+    ViewData["Title"] = "Requisiciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -28,7 +28,7 @@
     {
         @if (ViewBag.OrdenarPor.Equals("Requisición"))
         {
-            <form asp-action="Index" asp-controller="Devoluciones" method="get">
+            <form asp-action="Index" asp-controller="Requisiciones" method="get">
                 <input type="hidden" name="ordenarPorIdOrdenProduccion" value="true" />
                 <p>
                     <button type="submit" class="btn btn-dark ">Ordenar por ID de Orden de Producción</button>
@@ -37,7 +37,7 @@
         }
         else
         {
-            <form asp-action="Index" asp-controller="Devoluciones" method="get">
+            <form asp-action="Index" asp-controller="Requisiciones" method="get">
                 <input type="hidden" name="ordenarPorIdOrdenProduccion" value="false" />
                 <p>
                     <button type="submit" class="btn btn-dark ">Ordenar por ID de Requisición</button>

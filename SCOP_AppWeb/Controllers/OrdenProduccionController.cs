@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using SCOP_AppWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;

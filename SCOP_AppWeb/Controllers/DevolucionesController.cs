@@ -176,12 +176,19 @@ namespace SCOP_AppWeb.Controllers
             //Verifica que el modelo está bien
             if (ModelState.IsValid)
             {
+                //Agrega los datos default de las devoluciones
                 devoluciones.IdUsuario = usuarios.idUsuario;
                 devoluciones.FechaCreacion = DateTime.Now;
                 devoluciones.EstadoActivo = true;
-
+                //Guarda las devoluciones en la base de datos
                 _context.Add(devoluciones);
                 await _context.SaveChangesAsync();
+
+                //Actualiza el estado de la orden de producción en la base de datos
+                ordenProduccion.EstadoActivo = false;
+                _context.Update(devoluciones);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(devoluciones);
@@ -269,7 +276,8 @@ namespace SCOP_AppWeb.Controllers
             var devoluciones = await _context.Devoluciones.FindAsync(id);
             if (devoluciones != null)
             {
-                _context.Devoluciones.Remove(devoluciones);
+                devoluciones.EstadoActivo = false;
+                _context.Devoluciones.Update(devoluciones);
             }
             
             await _context.SaveChangesAsync();

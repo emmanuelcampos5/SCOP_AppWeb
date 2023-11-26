@@ -34,7 +34,7 @@ namespace SCOP_AppWeb.Controllers
             // Ordena la lista solo si se hace clic en el botón para ordenar
             if (ordenarPorIdOrdenProduccion)
             {
-                requisiciones = requisiciones.OrderBy(d => d.IdOrdenProduccion);
+                requisiciones = requisiciones.OrderBy(r => r.IdOrdenProduccion);
                 ViewBag.OrdenarPor = "Producción";
             }
             else
