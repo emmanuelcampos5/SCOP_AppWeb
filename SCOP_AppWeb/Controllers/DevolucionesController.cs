@@ -97,7 +97,6 @@ namespace SCOP_AppWeb.Controllers
                             //Si la orden existe busca el usuario y las requisiciones asociadas
                             if (ordenProduccion != null)
                             {
-
                                 resultados = _context.Devoluciones
                                     .Where(d => d.IdOrdenProduccion == ordenProduccionId);
                             }

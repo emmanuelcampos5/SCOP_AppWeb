@@ -56,13 +56,13 @@
         <input type="hidden" asp-for="IdRequisicion" />
         @if (User.Identity.IsAuthenticated)
                 {
-                   <input type="submit" value="Cancelar la requisición" class="btn btn-danger" />        
-                }
+                   <input type="submit" value="Cancelar la requisición" class="btn btn-danger btn-effect" />
+        }
         else
                 {
-                   <input type="submit" value="Cancelar la requisición" class="btn btn-danger" disabled />
+                   <input type="submit" value="Cancelar la requisición" class="btn btn-danger btn-effect" disabled />
                 }
-        | <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+        | <a asp-action="Index" class="btn btn-secondary btn-effect">Volver a la lista</a>
     </form>
 
     <div>

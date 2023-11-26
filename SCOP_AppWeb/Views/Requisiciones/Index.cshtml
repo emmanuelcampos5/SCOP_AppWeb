@@ -9,19 +9,19 @@
 
 <p>
     <div class="d-inline-block mb-2">
-        <a asp-action="Create" class="btn btn-success">Añadir requisición</a>
-        <a asp-action="Buscar" class="btn btn-primary">
+        <a asp-action="Create" class="btn btn-success btn-effect">Añadir requisición</a>
+        <a asp-action="Buscar" class="btn btn-primary btn-effect">
             Buscar requisiciones
         </a>
 
     </div>
     @if (ViewBag.MostrarActivos)
     {
-        <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="false" class="btn btn-secondary ml-2">Mostrar canceladas</a>
+        <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="false" class="btn btn-secondary ml-2 btn-effect">Mostrar canceladas</a>
     }
     else
     {
-        <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="true" class="btn btn-secondary ml-2">Ocultar canceladas</a>
+        <a asp-action="FiltrarRequisiciones" asp-route-mostrarActivos="true" class="btn btn-secondary ml-2 btn-effect">Ocultar canceladas</a>
     }
 
      @if (ViewBag.MostrarActivos)
@@ -100,8 +100,8 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <div>
-                                <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success">Editar</a> |
-                                <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger">Cancelar</a>
+                                <a asp-action="Edit" asp-route-id="@item.IdRequisicion" class="btn btn-success btn-effect">Editar</a> |
+                                <a asp-action="Delete" asp-route-id="@item.IdRequisicion" class="btn btn-danger btn-effect">Cancelar</a>
                             </div>
                         }
                     </td>
@@ -112,6 +112,9 @@
                 <tr class="text-muted">
                     <td>
                         @Html.DisplayFor(modelItem => item.IdOrdenProduccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdRequisicion)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaCreacion)

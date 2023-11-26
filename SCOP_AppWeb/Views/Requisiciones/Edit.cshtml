@@ -61,13 +61,13 @@
             <div class="form-group">
                  @if (User.Identity.IsAuthenticated)
                 {
-                    <input type="submit" value="Guardar cambios" class="btn btn-success" />
+                    <input type="submit" value="Guardar cambios" class="btn btn-success btn-effect" />
                 }
                 else
                 {
                     <input type="submit" value="Guardar cambios" class="btn btn-success disabled" />                    
                 }
-                <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
+                <a asp-action="Index" class="btn btn-secondary ml-2 btn-effect">Volver a la lista</a>
             </div>
 
         </form>

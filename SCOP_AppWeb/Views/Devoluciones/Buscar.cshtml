@@ -21,14 +21,14 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-success mt-2">Buscar</button>
+    <button type="submit" class="btn btn-success mt-2 btn-effect">Buscar</button>
 </form>
 
 @if (Model != null && Model.Any())
 {
     <h2>Resultados de la Búsqueda:</h2>
 
-    @if (ViewBag.CostoTotal != null)
+    @if (ViewBag.DescripcionOrdenProduccion != null)
     {
         <h3>Costo total de la orden de producción</h3>
         <table class="table">
@@ -89,8 +89,8 @@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <div>
-                                    <a asp-action="Edit" asp-route-id="@item.IdDevolucion" class="btn bt-success">Editar</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.IdDevolucion" class="btn btn-danger">Cancelar</a>
+                                    <a asp-action="Edit" asp-route-id="@item.IdDevolucion" class="btn btn-success btn-effect">Editar</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.IdDevolucion" class="btn btn-danger btn-effect">Cancelar</a>
                                 </div>
                             }
                         </td>
