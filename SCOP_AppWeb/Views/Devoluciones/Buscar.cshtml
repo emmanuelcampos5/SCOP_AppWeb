@@ -6,7 +6,27 @@
 }
 
 <h1>Buscar Devoluciones</h1>
+<style>
+    .content {
+        background-color: cadetblue;
+    }
 
+    .color {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+    }
+
+    .letra {
+        color: black;
+    }
+
+    .fondo {
+        background-color: ghostwhite
+    }
+</style>
+
+<body class="color letra">
+    <div class="col-md-8 mx-auto fondo" style=" border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
 <form method="post" asp-action="BuscarFiltrado" class="form-inline mb-3">
     <div class="form-group mr-2">
         <label for="terminoBusqueda">Buscar:</label>
@@ -22,8 +42,9 @@
     </div>
 
     <button type="submit" class="btn btn-success mt-2 btn-effect">Buscar</button>
+            <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
 </form>
-
+    </div>
 @if (Model != null && Model.Any())
 {
     <h2>Resultados de la Búsqueda:</h2>
@@ -130,6 +151,6 @@
 }
 
 
-<div class="form-group mt-2">
-    <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
-</div>
+
+
+</body>

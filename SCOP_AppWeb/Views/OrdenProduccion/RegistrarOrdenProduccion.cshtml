@@ -9,8 +9,24 @@
 
 <h4>OrdenProduccion</h4>
 <hr />
+
+<style>
+    .content {
+        background-color: cadetblue;
+    }
+
+    .color {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+    }
+
+    .letra {
+        color: black;
+    }
+</style>
+<body class="color letra">
 <div class="row">
-    <div class="col-md-4">
+        <div class="col-md-4 mx-auto" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
         @if (TempData["MensajeError"] != null)
         {
             <div class="alert alert-warning" role="alert">
@@ -34,12 +50,12 @@
             
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
+
+</body>

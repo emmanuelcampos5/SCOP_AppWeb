@@ -8,6 +8,22 @@
 <h1>Cancelar orden de producción</h1>
 
 <h3>Está seguro de que desea cancelar la orden de producción?</h3>
+
+<style>
+    .content {
+        background-color: cadetblue;
+    }
+
+    .color {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+    }
+
+    .letra {
+        color: black;
+    }
+</style>
+<body class="color letra">
 <div>
     <h4>Orden producción</h4>
     <hr />
@@ -18,7 +34,7 @@
             <strong>@TempData["MensajeError"]</strong>
         </div>
     }
-    <dl class="row">
+        <dl class="row mx-auto" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
         <dt class = "col-sm-2">
             ID
         </dt>
@@ -57,3 +73,4 @@
         <a asp-action="Index" class="btn btn-secondary">Regresar</a>
     </form>
 </div>
+</body>

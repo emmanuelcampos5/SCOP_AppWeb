@@ -5,9 +5,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="letra">Lista Auditoria</h1>
+<style>
+    .fondo {
+        background-image: url('/img/img/rayas.jpg');
+        background-position: center center;
+        --background-size: cover; /* Para cubrir todo el fondo */
+        --background-position: center; /* Posición de la imagen */
+        --background-repeat: no-repeat;
+        background-size: 100% 300px;
+        height: 100vh;
+        font-family: 'Lobster', cursive;
+    }
 
-<table class="table">
+
+    .fondotabla {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+        border-radius: 5px;
+    }
+
+    .boton {
+        color: #0a0a0a;
+        background: linear-gradient(#747871, #FFFFFF);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .letra {
+        color: black;
+    }
+</style>
+
+
+
+<body class="fondo">
+
+<table class="table fondotabla">
     <thead>
         <tr>
             <th>
@@ -44,3 +78,4 @@
 }
     </tbody>
 </table>
+</body>

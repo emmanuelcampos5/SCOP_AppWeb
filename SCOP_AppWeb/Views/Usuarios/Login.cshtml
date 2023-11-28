@@ -6,11 +6,33 @@
 <h1 class="Titulos">
     Autenticacion
 </h1>
+
+<style>
+    body {
+        background-color: black;
+        background-image: url('/img/login2.png');
+        background-position: center center;
+        background-size: contain;
+        --background-size: cover; /* Para cubrir todo el fondo */
+
+        background-repeat: no-repeat;
+        margin: 0;
+        height: 100vh;
+        font-family: 'Lobster', cursive;
+    }
+
+    .text-center {
+        color: black; /* Puedes ajustar el color del texto para que sea legible en la imagen de fondo */
+        margin-top: 80px;
+        margin-left: 280px;
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 Aliniamiento">
-            <form asp-action="Login" class="Fondos Textos" method="post" style="color: black; font-size:large; width:600px">
+            <form asp-action="Login" class="Fondos Textos" method="post" style="color: black; font-size:large; width:400px">
                 @if (TempData["Mensaje"] != null)
                 {
                     <div class="alert alert-warning" role="alert">

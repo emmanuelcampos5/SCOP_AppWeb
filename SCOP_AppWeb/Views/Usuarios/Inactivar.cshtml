@@ -7,7 +7,28 @@
 
 <h1>Inactivar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Desea inactivar el usuario?</h3>
+
+<style>
+    .content {
+        background-color: cadetblue;
+    }
+
+    .color {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+    }
+
+    .letra {
+        color: black;
+    }
+
+    .fondo {
+        background-color: ghostwhite
+    }
+</style>
+
+<body class="color letra">
 <div>
     <h4>Usuarios</h4>
     <hr />
@@ -58,7 +79,8 @@
     
     <form asp-action="Inactivar">
         <input type="hidden" asp-for="idUsuario" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Inactivar" class="btn btn-danger" /> |
+            <a asp-action="Index" class="btn btn-secondary ml-2">Volver a la lista</a>
     </form>
 </div>
+</body>

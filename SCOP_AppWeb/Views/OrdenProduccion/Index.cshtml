@@ -5,12 +5,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Órdenes de producción</h1>
+<h1 class="letra">Órdenes de producción</h1>
 
 <p>
     <a asp-action="RegistrarOrdenProduccion" class="btn btn-success">Agregar Orden</a>
 </p>
-<table class="table">
+
+<style>
+    .fondo {
+        background-image: url('/img/rayas.jpg');
+        background-position: center center;
+        --background-size: cover; /* Para cubrir todo el fondo */
+        --background-position: center; /* Posición de la imagen */
+        --background-repeat: no-repeat;
+        background-size: 100% 300px;
+        height: 100vh;
+        font-family: 'Lobster', cursive;
+    }
+
+
+    .fondotabla {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+        border-radius: 5px;
+    }
+
+    .boton {
+        color: #0a0a0a;
+        background: linear-gradient(#747871, #FFFFFF);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .letra {
+        color: white;
+    }
+</style>
+
+
+<body class="fondo">
+    <table class="table fondotabla">
     <thead>
         <tr>
             <th>
@@ -50,13 +84,14 @@
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>            
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdOrdenProduccion" class="btn btn-primary">Editar</a> |
-                <a asp-action="Finalizar" asp-route-id="@item.IdOrdenProduccion" class="btn btn-warning">Finalizar</a> |
-                <a asp-action="Produccion" asp-route-id="@item.IdOrdenProduccion" class="btn btn-warning">Produccion</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdOrdenProduccion" class="btn btn-danger">Cancelar</a> 
-                
-            </td>
+                        <a asp-action="Edit" asp-route-id="@item.IdOrdenProduccion" class="btn boton">Editar</a> |
+                        <a asp-action="Finalizar" asp-route-id="@item.IdOrdenProduccion" class="btn boton">Finalizar</a> |
+                        <a asp-action="Produccion" asp-route-id="@item.IdOrdenProduccion" class="btn boton">Produccion</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdOrdenProduccion" class="btn boton">Cancelar</a>
+
+                    </td>
         </tr>
 }
     </tbody>
 </table>
+</body>

@@ -10,14 +10,27 @@
     <title>@ViewData["Title"]</title> 
 </head>
 
-<body>
+
+<style>
+    .inicio{
+        background-color: #41403C;
+        background-image: url('/img/P1.jpg');
+        background-position: center center;
+        background-size: contain;
+        --background-size: cover; /* Para cubrir todo el fondo */
+
+        background-repeat: no-repeat;
+        margin: 0;
+        height: 100vh;
+        font-family: 'Lobster', cursive;
+    }
+</style>
+
+<body class="inicio">
 
 
-    <div class="container mt-5">
-        <div class="text-center">
-            <h1 class="display-4">¡Optimiza tus Costos con CostOptiFine!</h1>
-            <p class="lead">Automatización y Cálculo de Órdenes de Producción</p>
-        </div>
+    <div class="container mt-5 pt-4">
+     
 
         <div class="row mt-5">
             <div class="col-md-4">

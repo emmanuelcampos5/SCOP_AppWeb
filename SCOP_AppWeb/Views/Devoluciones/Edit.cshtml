@@ -9,8 +9,25 @@
 
 <h4>Devolución:</h4>
 <hr />
+
+<style>
+    .content {
+        background-color: cadetblue;
+    }
+
+    .color {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+    }
+
+    .letra {
+        color: black;
+    }
+</style>
+
+<body class=" color letra">
 <div class="row">
-    <div class="col-md-4">
+        <div class="col-md-4 mx-auto" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdDevolucion" />
@@ -46,12 +63,11 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar cambios" class="btn btn-success mt-2 btn-effect" />
+                    <a asp-action="Index" class="btn btn-primary mt-2 btn-effect">Volver a la lista</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" class="btn btn-primary mt-2 btn-effect">Volver a la lista</a>
-</div>
 
+</body>

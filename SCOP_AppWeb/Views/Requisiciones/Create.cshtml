@@ -13,8 +13,25 @@
     </div>
 }
 <hr />
+
+<style>
+    .content {
+        background-color: cadetblue;
+    }
+
+    .color {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+    }
+
+    .letra {
+        color: black;
+    }
+</style>
+<body class="color">
+    <div class="container">
 <div class="row">
-    <div class="col-md-4">
+            <div class="col-md-4 mx-auto">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -75,3 +92,5 @@
     </div>
     
 </div>
+    </div>
+</body>

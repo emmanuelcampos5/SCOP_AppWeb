@@ -5,12 +5,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="letra">Registro</h1>
 
 <p>
-    <a asp-action="RegistrarUsuario">Registrar Usuario</a>
+    <a asp-action="RegistrarUsuario" class="btn btn-primary">Registrar Usuario</a>
 </p>
-<table class="table">
+
+<style>
+    .fondo {
+        background-image: url('/img/rayas.jpg');
+        background-position: center center;
+        --background-size: cover; /* Para cubrir todo el fondo */
+        --background-position: center; /* Posición de la imagen */
+        --background-repeat: no-repeat;
+        background-size: 100% 300px;
+        height: 100vh;
+        font-family: 'Lobster', cursive;
+    }
+
+
+    .fondotabla {
+        background-color: #F0FFFF;
+        font-family: 'Lobster', cursive;
+        border-radius: 5px;
+    }
+
+    .boton {
+        color: #0a0a0a;
+        background: linear-gradient(#747871, #FFFFFF);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .letra {
+        color: white;
+    }
+
+    .boton2 {
+        color: #0a0a0a;
+        background: linear-gradient(#747871, #FFFFFF);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+<body class="fondo">
+<table class="table fondotabla">
     <thead>
         <tr>
             <th>
@@ -68,10 +107,11 @@
                 @Html.DisplayFor(modelItem => item.restablecer)
             </td>
             <td>
-                @Html.ActionLink("Modificar", "Edit", new {  id=item.idUsuario }) |
-                @Html.ActionLink("Inactivar", "Inactivar", new {  id=item.idUsuario })
+                        <a asp-action="Edit" asp-route-id="@item.idUsuario" class="btn boton">Modificar</a>
+                        <a asp-action="Inactivar" asp-route-id="@item.idUsuario" class="btn boton">Inactivar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</body>
