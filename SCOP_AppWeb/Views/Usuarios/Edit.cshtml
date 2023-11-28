@@ -1,0 +1,62 @@
+﻿@model SCOP_AppWeb.Models.Usuarios
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Usuarios</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="idUsuario" />
+            <div class="form-group">
+                <label asp-for="idRol" class="control-label"></label>
+                <input asp-for="idRol" class="form-control" />
+                <span asp-validation-for="idRol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nombreUsuario" class="control-label"></label>
+                <input asp-for="nombreUsuario" class="form-control" />
+                <span asp-validation-for="nombreUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="correoUsuario" class="control-label"></label>
+                <input asp-for="correoUsuario" class="form-control" />
+                <span asp-validation-for="correoUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="telefonoUsuario" class="control-label"></label>
+                <input asp-for="telefonoUsuario" class="form-control" />
+                <span asp-validation-for="telefonoUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="estadoActivo" /> @Html.DisplayNameFor(model => model.estadoActivo)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="restablecer" /> @Html.DisplayNameFor(model => model.restablecer)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

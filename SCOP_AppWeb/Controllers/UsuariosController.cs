@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SCOP_AppWeb.Models;
 using System.Security.Claims;
@@ -87,7 +88,7 @@ namespace SCOP_AppWeb.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(_context.Usuarios.ToList());
+            return View(_context.Usuarios.Where(u => u.estadoActivo == true).ToList());
         }
 
         //---------------------------------------CREAR USUARIO------------------------------------------------
@@ -252,6 +253,84 @@ namespace SCOP_AppWeb.Controllers
                 }
             }
             return verificado;
+        }
+
+        //-----------------------------------------Inactivar---------------------------------------------------
+
+        [HttpGet]
+        public IActionResult Inactivar(int id)
+        {
+            var temp = _context.Usuarios.Find(id);
+            return View(temp);
+        }
+
+        [HttpPost]
+        public IActionResult Inactivar(int? id)
+        {
+            var temp = _context.Usuarios.Find(id);
+            temp.estadoActivo = false;
+            _context.Usuarios.Update(temp);
+            _context.SaveChanges();
+            Auditoria(temp, "eliminar");
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+
+            var temp = _context.Usuarios.Find(id);
+            return View(temp);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Usuarios usuario)
+        {
+            _context.Usuarios.Update(usuario);
+            _context.SaveChanges();
+            Auditoria(usuario, "editar");
+            return RedirectToAction("Index");
+        }
+
+        public void Auditoria(Usuarios usuario, string tipoAccion)
+        {
+            // Obtener el nombre del usuario logeado
+            var correoUsuario = User.Identity.Name;
+
+            // Buscar el ID del usuario en base al nombre de usuario
+            var user = _context.Usuarios.FirstOrDefault(u => u.correoUsuario == correoUsuario);
+
+            if (user != null)
+            {
+                RegistroAuditoria registroAuditoria = new RegistroAuditoria
+                {
+                    TablaModificada = "Usuarios",
+                    IdUsuarioModificacion = user.idUsuario,
+                    FechaModificacion = DateTime.Now
+                };
+
+                switch (tipoAccion)
+                {
+                    case "eliminar":
+                        registroAuditoria.Descripcion = "Se eliminó el usuario con el ID " + usuario.idUsuario;
+                        break;
+
+                    case "editar":
+                        registroAuditoria.Descripcion = "Se editó el usuario con el ID " + usuario.idUsuario;
+                        break;
+
+                    default:
+                        throw new ArgumentException("Acción no identificada para la auditoría.");
+                }
+
+                _context.RegistroAuditoria.Add(registroAuditoria);
+                _context.SaveChanges();
+            }
+            else
+            {
+                // Si el usuario no se encuentra                
+                throw new InvalidOperationException("No se pudo encontrar el usuario para la auditoría.");
+            }
         }
     }
 }
