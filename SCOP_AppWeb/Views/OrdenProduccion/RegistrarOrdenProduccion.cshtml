@@ -11,23 +11,15 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="RegistrarOrdenProduccion">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>         
-            
-            <div class="form-group">
-                <label asp-for="FechaRecepcion" class="control-label"></label>
-                <input asp-for="FechaRecepcion" class="form-control" />
-                <span asp-validation-for="FechaRecepcion" class="text-danger"></span>
-            </div>            
-
-            <div class="form-group">
-                <label asp-for="EstadoProduccion" class="control-label">Estado Produción</label>
-                <select asp-for="EstadoProduccion" class="combobox form-control">
-                    <option value="Espera">Espera</option>
-                    <option value="Producción">Producción</option>
-                    <option value="Finalizado">Finalizado</option>
-                </select>
+        @if (TempData["MensajeError"] != null)
+        {
+            <div class="alert alert-warning" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                <strong>@TempData["MensajeError"]</strong>
             </div>
+        }
+        <form asp-action="RegistrarOrdenProduccion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>                 
 
             <div class="form-group">
                 <label asp-for="CantidadProductos" class="control-label"></label>

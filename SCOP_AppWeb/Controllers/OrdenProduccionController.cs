@@ -87,27 +87,38 @@ namespace SCOP_AppWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistrarOrdenProduccion([Bind("IdOrdenProduccion, IdUsuario, FechaRecepcion, EstadoProduccion, CantidadProductos, Descripcion, EstadoActivo")] OrdenProduccion orden)
-        {
-            if (orden != null)
+        {            
+            try
             {
+                if (orden != null)
+                {
+                    if (orden.CantidadProductos == 0 || orden.Descripcion == "")
+                    {
+                        TempData["MensajeError"] = "Asegurese de llenar todos los campos";
+                        return View(orden);
+                    }
+                    else
+                    {
+                        orden.EstadoProduccion = "Espera";
+                        orden.FechaRecepcion = DateTime.Now;
+                        orden.IdUsuario = ObtenerUsuarioConectado().idUsuario;
+                        orden.EstadoActivo = true;
 
-                orden.IdUsuario = ObtenerUsuarioConectado().idUsuario;
-                orden.EstadoActivo = true;
+                        _context.Add(orden);
 
-
-                _context.Add(orden);
-
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            else
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                } 
+            }catch(Exception ex)
             {
-                return View(orden);
-            }
+                TempData["MensajeError"] = "Error al agregar la orden de producción" + ex;
+            }          
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             var temp = _context.OrdenProduccion.Find(id);
 
@@ -119,12 +130,11 @@ namespace SCOP_AppWeb.Controllers
             {
                 return View(temp);
             }
-
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
 
             var temp = _context.OrdenProduccion.Find(id);
@@ -135,7 +145,7 @@ namespace SCOP_AppWeb.Controllers
                 {   
                     temp.EstadoActivo = false;
                     _context.OrdenProduccion.Update(temp);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
                     RegistroAuditoria auditoria = new RegistroAuditoria();
 
@@ -145,11 +155,14 @@ namespace SCOP_AppWeb.Controllers
                     auditoria.Descripcion = "Se eliminó la orden de producción con el ID " + temp.IdOrdenProduccion;
 
                     _context.RegistroAuditoria.Add(auditoria);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("Index");
                 }
                 else
                 {
                     TempData["MensajeError"] = "No se pueden eliminar oredenes en estado de producción o finalizado";
+                    return View(temp);
                 }
             }
             catch (Exception ex)
@@ -188,10 +201,7 @@ namespace SCOP_AppWeb.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    //var temp = _context.OrdenProduccion.Find(id);
-                    //await _context.SaveChangesAsync();
-
+                {                    
                     string estado = ObtenerEstadoProduccionOrden(id);
 
                     if (estado == "Espera")
@@ -214,7 +224,7 @@ namespace SCOP_AppWeb.Controllers
                     else
                     {
                         TempData["MensajeError"] = "No se pueden editar oredenes en estado de producción o finalizado";
-                        return RedirectToAction("Index");
+                        return View(orden);
                     }
                 }
                 catch (Exception ex)
@@ -225,5 +235,113 @@ namespace SCOP_AppWeb.Controllers
             }            
             return View(orden);                        
         }
+
+        [HttpGet]
+        public IActionResult Finalizar(int? id)
+        {
+            var temp = _context.OrdenProduccion.Find(id);
+
+            if (temp == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(temp);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>Finalizar(int id)
+        {
+            var temp = _context.OrdenProduccion.Find(id);
+
+            try
+            {
+                if (temp.EstadoProduccion == "Producción")
+                {
+                    temp.EstadoProduccion = "Finalizado";
+                    _context.OrdenProduccion.Update(temp);
+                    await _context.SaveChangesAsync();
+
+                    RegistroAuditoria auditoria = new RegistroAuditoria();
+
+                    auditoria.TablaModificada = "OrdenProduccion";
+                    auditoria.FechaModificacion = DateTime.Now;
+                    auditoria.IdUsuarioModificacion = ObtenerUsuarioConectado().idUsuario;
+                    auditoria.Descripcion = "Se finalizó la orden de producción con el ID " + temp.IdOrdenProduccion;
+
+                    _context.RegistroAuditoria.Add(auditoria);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["MensajeError"] = "Únicamente se puede finalizar órdenes que esten en estado de producción";
+                    return View(temp);
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = "Error al finalizar la orden" + ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public IActionResult Produccion(int? id)
+        {
+            var temp = _context.OrdenProduccion.Find(id);
+
+            if (temp == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(temp);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Produccion(int id)
+        {
+            var temp = _context.OrdenProduccion.Find(id);
+
+            try
+            {
+                if (temp.EstadoProduccion == "Espera")
+                {
+                    temp.EstadoProduccion = "Producción";
+                    _context.OrdenProduccion.Update(temp);
+                    await _context.SaveChangesAsync();
+
+                    RegistroAuditoria auditoria = new RegistroAuditoria();
+
+                    auditoria.TablaModificada = "OrdenProduccion";
+                    auditoria.FechaModificacion = DateTime.Now;
+                    auditoria.IdUsuarioModificacion = ObtenerUsuarioConectado().idUsuario;
+                    auditoria.Descripcion = "Se pasó a estado de producción la orden con el ID " + temp.IdOrdenProduccion;
+
+                    _context.RegistroAuditoria.Add(auditoria);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["MensajeError"] = "Únicamente se puede pasar a producción las órdenes que esten en estado de espera";
+                    return View(temp);
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = "Error al pasar la orden a producción" + ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
